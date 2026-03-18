@@ -440,6 +440,105 @@ body{
 
 
 /* ====================================================
+   GUIDE SECTION
+   ==================================================== */
+.guide-section{
+  width:100%;max-width:720px;
+  margin:48px auto 0;
+  padding:0 0 60px;
+}
+.guide-heading{text-align:center;margin-bottom:28px}
+.guide-title{
+  font-family:'Noto Serif JP',serif;
+  font-size:16px;color:var(--gold);
+  letter-spacing:0.22em;margin-bottom:8px;
+}
+.guide-sub{font-size:12px;color:var(--text-dim);letter-spacing:0.14em}
+.guide-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+@media(min-width:500px){.guide-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:700px){.guide-grid{grid-template-columns:repeat(4,1fr)}}
+.guide-card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:14px;padding:16px 12px;
+  text-align:center;cursor:pointer;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.guide-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,rgba(201,168,76,.08),transparent 70%);
+  opacity:0;transition:opacity .3s;
+}
+.guide-card:hover{
+  border-color:rgba(201,168,76,.55);
+  transform:translateY(-3px);
+  box-shadow:0 8px 26px rgba(0,0,0,.4);
+}
+.guide-card:hover::before{opacity:1}
+.gc-emoji{font-size:26px;margin-bottom:7px;display:block}
+.gc-name{
+  font-family:'Noto Serif JP',serif;font-size:12px;font-weight:600;
+  color:var(--gold-pale);letter-spacing:0.08em;margin-bottom:4px;
+}
+.gc-country{font-size:10px;color:var(--text-dim);letter-spacing:0.1em}
+.gc-link{
+  display:inline-block;margin-top:8px;font-size:10px;color:var(--gold);
+  border-bottom:1px solid rgba(201,168,76,.3);
+  letter-spacing:0.1em;padding-bottom:1px;transition:border-color .2s;
+}
+.guide-card:hover .gc-link{border-color:var(--gold)}
+
+/* ====================================================
+   GUIDE MODAL
+   ==================================================== */
+.guide-modal-bg{
+  position:fixed;inset:0;
+  background:rgba(4,8,15,.88);
+  backdrop-filter:blur(6px);
+  z-index:2000;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s;
+}
+.guide-modal-bg.open{opacity:1;pointer-events:all}
+.guide-modal{
+  background:linear-gradient(160deg,#0f1628 0%,#100c1e 100%);
+  border:1px solid rgba(201,168,76,.35);
+  border-radius:22px;padding:36px 32px 32px;
+  max-width:560px;width:100%;max-height:88vh;overflow-y:auto;
+  position:relative;
+  transform:translateY(20px) scale(.97);transition:transform .35s;
+  box-shadow:0 24px 80px rgba(0,0,0,.7),0 0 40px rgba(201,168,76,.07);
+}
+.guide-modal-bg.open .guide-modal{transform:translateY(0) scale(1)}
+.gm-close{
+  position:absolute;top:16px;right:18px;
+  background:none;border:none;color:var(--text-dim);
+  font-size:18px;cursor:pointer;transition:color .2s;line-height:1;
+}
+.gm-close:hover{color:var(--gold)}
+.gm-emoji{font-size:44px;text-align:center;margin-bottom:10px}
+.gm-title{
+  font-family:'Cinzel Decorative','Noto Serif JP',serif;
+  font-size:20px;font-weight:700;color:var(--gold);
+  text-align:center;letter-spacing:0.1em;margin-bottom:6px;
+}
+.gm-origin{text-align:center;font-size:12px;color:var(--text-dim);letter-spacing:0.18em;margin-bottom:14px}
+.gm-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 22px}
+.gm-body{display:flex;flex-direction:column;gap:18px}
+.gm-sec{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.14);border-radius:12px;padding:16px 18px}
+.gm-sec-label{font-size:10px;color:var(--gold);letter-spacing:0.25em;font-weight:600;margin-bottom:8px;text-transform:uppercase}
+.gm-sec-text{font-size:13px;color:var(--text-mid);line-height:1.85;letter-spacing:0.05em}
+.gm-similar{margin-top:18px;padding:14px 18px;background:rgba(67,97,238,.06);border:1px solid rgba(67,97,238,.2);border-radius:12px}
+.gm-sim-label{font-size:10px;color:#8899ee;letter-spacing:0.25em;font-weight:600;margin-bottom:8px}
+.gm-sim-tags{display:flex;flex-wrap:wrap;gap:7px}
+.gm-sim-tag{font-size:11px;color:#aab8ff;background:rgba(67,97,238,.12);border:1px solid rgba(67,97,238,.25);border-radius:20px;padding:4px 12px;letter-spacing:0.08em}
+
+/* ====================================================
    PRINT STYLES — A4 最適化
    ==================================================== */
 @media print {
@@ -635,6 +734,29 @@ body{
     </div>
 
     <button class="exec-btn" onclick="startFortune()">✦ 占いを開始する ✦</button>
+  </div>
+
+  <!-- ===== 占術解説セクション ===== -->
+  <div class="guide-section">
+    <div class="guide-heading">
+      <div class="g-divider" style="max-width:60px;margin:0 auto 18px"></div>
+      <div class="guide-title">✦ 13の占術 — それぞれの物語 ✦</div>
+      <div class="guide-sub">起源・文化・占法を深く知ることで、鑑定の意味が変わる</div>
+    </div>
+    <div class="guide-grid" id="guide-grid"></div>
+  </div>
+</div>
+
+<!-- ===== 占術詳細モーダル ===== -->
+<div class="guide-modal-bg" id="guide-modal-bg" onclick="closeGuide(event)">
+  <div class="guide-modal" id="guide-modal">
+    <button class="gm-close" onclick="closeGuideModal()">✕</button>
+    <div class="gm-emoji" id="gm-emoji"></div>
+    <div class="gm-title" id="gm-title"></div>
+    <div class="gm-origin" id="gm-origin"></div>
+    <div class="gm-divider"></div>
+    <div class="gm-body" id="gm-body"></div>
+    <div class="gm-similar" id="gm-similar"></div>
   </div>
 </div>
 
@@ -1197,6 +1319,144 @@ function shareResult(){
     }).catch(()=>alert(text));
   }
 }
+
+/* ====================================================
+   GUIDE DATA — 13占術の物語
+   ==================================================== */
+const GUIDE_DATA=[
+  {
+    id:'zodiac',emoji:'♈',name:'西洋占星術',country:'🌍 バビロニア → ギリシャ → 欧米',
+    history:'紀元前3000年頃の古代メソポタミア・バビロニアで、祭司たちが夜空の星を観察し神意を読み取る術として誕生。その後ギリシャ・ローマ時代に哲学・数学と融合して理論化され、現代西洋占星術の基盤が完成した。12星座・10天体・12ハウスという体系が確立し、ルネサンス期には医学や政治の意思決定にも使われた。中世ヨーロッパではキリスト教の弾圧を受けながらも民間に生き延び、20世紀に大衆化して今日世界で最も普及した占術となった。',
+    method:'生年月日と出生時刻・場所から出生チャート（ホロスコープ）を作成する。太陽星座（12星座のどれか）・月星座・上昇星座（アセンダント）を中心に、各惑星の配置・アスペクト（角度関係）・ハウス（人生の12領域）を総合的に解釈する。性格・才能・運勢の周期・人間関係の相性まで幅広く読み解くことができる。',
+    similar:['月占術（ルナロジー）','東洋占星術（紫微斗数）','ヴェーダ占星術（ジョーティッシュ）','ドルイドの木占い']
+  },
+  {
+    id:'num',emoji:'🔢',name:'数秘術',country:'🌍 ユダヤ（カバラ）→ 古代ギリシャ → 欧米',
+    history:'古代ユダヤのカバラ思想に由来し、ヘブライ文字と数の神秘的な関係「ゲマトリア」が起源のひとつ。同時期、古代ギリシャの数学者ピタゴラスが「数は万物の根源」と唱え、1〜9の数に宇宙的な意味を見出した「ピタゴリアン数秘術」が独立して発展。中世に両者が融合し、近代では20世紀初頭の神智学者ロサンヌ・ドーティらによって現代数秘術として体系化された。シンプルな計算で誰でも実践できる手軽さが世界的な普及を促した。',
+    method:'生年月日の各数字をすべて足し、1桁になるまで繰り返す（例：1990年5月12日 → 1+9+9+0+5+1+2=27 → 2+7=9）。この「ライフパスナンバー」1〜9（特別数11・22・33を加える流派もある）に基づいて、魂の本質・使命・才能・人生テーマを読み解く。名前のアルファベットを数値化する「ソウルナンバー」「ネームナンバー」との組み合わせで精度が上がる。',
+    similar:['カバラ数秘術（ヘブライ）','ピタゴリアン数秘術','算命学（東洋版数理命術）','九星気学']
+  },
+  {
+    id:'celtic',emoji:'🌳',name:'ケルト樹木占い',country:'🌿 アイルランド・スコットランド（ケルト文化圏）',
+    history:'紀元前500〜200年頃のケルト民族に仕えた祭司「ドルイド」が、特定の樹木を聖なる存在として崇めた自然信仰に起源を持つ。古代アイルランドの「コラム占い」で使われた木の文字「オガム文字」が誕生木（Birth Tree）の概念と結びついた。各樹木には精霊が宿ると信じられ、13の月周期（太陰暦）に合わせて13の聖木が割り当てられた。20世紀にロバート・グレーヴスの著書「白い女神」でこの体系が再発見・普及し、現代ケルト占いとして世界へ広まった。',
+    method:'生年月日を13の月周期（各月約4週間）に対応する聖木に当てはめる。シラカバ・ナナカマド・トネリコ・ハンノキ・ヤナギなど13種の樹木それぞれに、独自の性質・才能・魂の特性が対応している。樹木の生態（常緑か落葉か・根の張り方・花の咲き方）が人格や運命の象徴として解釈される。',
+    similar:['西洋占星術（誕生日分類系）','ルーン占い（北欧ゲルマン）','ネイティブアメリカンのアニマル占い','花占い（フラワーホロスコープ）']
+  },
+  {
+    id:'shichu',emoji:'☯',name:'四柱推命',country:'🈳 中国（唐〜宋代）',
+    history:'中国の陰陽五行思想を基盤に、唐代（7〜10世紀）の李虚中が誕生年・月・日の三柱で命を占う術を確立。宋代の徐子平が時刻（時柱）を加えた「四柱」体系に完成させ「子平術」とも呼ばれる。甲乙丙丁…の10干と子丑寅卯…の12支を組み合わせた60種の干支が4つ重なる「四柱」から、人の性格・才能・運勢の波を読む。日本には江戸時代に伝来し、明治以降に独自の解釈が加わって日本式四柱推命として発展した。',
+    method:'生年月日時を「年柱・月柱・日柱・時柱」の四つの干支（各2文字×4柱＝8文字）に変換し「四柱八字」を作成する。日柱の天干が「日主」となり、自分自身を表す。十神（比肩・劫財・食神・傷官・偏財・正財・偏官・正官・偏印・正印）の配置バランスから運命を読む。大運（10年周期）と年運（1年周期）で運の波を鑑定する。',
+    similar:['算命学（中国発・日本発展）','紫微斗数（命盤星術）','九星気学（年気学）','五行占い（基礎理論共有）']
+  },
+  {
+    id:'sanmei',emoji:'🎴',name:'算命学',country:'🈳 中国発祥 → 日本で独自発展',
+    history:'中国の陰陽五行・干支思想を源流とするが、現代算命学は20世紀に中国から渡来した高尾義政が日本で体系化・発展させた。四柱推命と共通の干支（十干十二支）を使うが、算命学はより「天中殺」「宿命・宿命の星」「位相法（干支の組み合わせ）」などの概念が特徴的。精神性・人生観・対人関係のパターンを重視する傾向があり、「人体星図（三才構造）」と呼ばれる独自の命盤図を用いる。日本では1970〜80年代に一世を風靡し、現在も多くの鑑定師に支持されている。',
+    method:'生年月日から干支（十干＋十二支）を算出し、「人体星図」という命盤を作成。縦に「天（精神）・人（感情）・地（行動）」の三段構造で性格と才能を読む。「天中殺」（人生で2年間、努力が実りにくい時期）の算出と活用が算命学の大きな特徴。陰占（表の命）と陽占（裏の命）の二面から人物像を立体的に分析する。',
+    similar:['四柱推命（干支体系共通）','九星気学（年干支活用）','紫微斗数（東洋命盤術）','五行占い（陰陽五行基盤）']
+  },
+  {
+    id:'kyusei',emoji:'⭐',name:'九星気学',country:'🈳 中国（洛書）→ 日本で体系化',
+    history:'古代中国の伝説「禹王が洛水から現れた亀の甲羅に刻まれた図（洛書）を得た」という故事が起源。洛書の9つの数字が「九星（一白水星〜九紫火星）」の原型となった。奇門遁甲・太乙神数などの古代中国術数学と陰陽五行・干支が融合し、日本には平安時代に伝来。明治〜大正時代に園田真次郎が現代的な「気学」として体系化・大衆化した。方位（吉方位・凶方位）の活用が独自の発展点で、「引越し・旅行の吉方位を取る」という実践的な活用法が特徴的。',
+    method:'生まれた年（一部流派では月・日も使用）から一白〜九紫の「本命星」を算出する。計算式：（11-（西暦年の各桁の和を9で割った余り））%9。本命星に対応する方位（東西南北・四隅・中宮）を使って、吉方位旅行・引越し・活用で運を上げ、凶方位を避けることで運を守る。年・月・日・時の「九星盤」の重なりを見ることで、より精密な運勢分析が可能。',
+    similar:['四柱推命（干支年活用）','算命学（同基盤）','風水（方位活用共通）','五行占い（五行理論共通）']
+  },
+  {
+    id:'shibi',emoji:'🌌',name:'紫微斗数',country:'🈳 中国・宋代（10世紀頃）',
+    history:'宋代の道士・陳希夷（ちん・きい）が創始したとされる中国最高峰の命術。「紫微」は北極星（天帝の星）を意味し、北斗七星・南斗六星を中心とする144の星（星曜）を12宮の命盤に配置して運命を読む。四柱推命が「時間の流れ」で命を見るのに対し、紫微斗数は「空間的な星の配置図」として命盤を構築するイメージ。台湾・香港・中国で現代でも最も権威ある命術とされ、プロの鑑定師の世界では四柱推命を凌ぐ精度と評する鑑定師も多い。',
+    method:'生年月日時から「十二宮（命宮・財帛宮・官禄宮など）」を設定し、144星を各宮に配置した命盤を作成。「紫微星」「天機星」「太陽星」など主要星が命宮に入るかどうかで基本的な人生の型が決まる。各宮の星の組み合わせと「四化（化禄・化権・化科・化忌）」の流動を読むことで、性格・才能・財運・人間関係・大限（10年周期）を精密に鑑定する。',
+    similar:['四柱推命（中国命術）','西洋占星術（ハウス概念類似）','算命学（命盤術）','インド占星術（星配置系）']
+  },
+  {
+    id:'rokusei',emoji:'✡',name:'六星占術',country:'🇯🇵 日本（昭和期）',
+    history:'日本の占い師・細木数子が1970年代に独自に体系化した、日本生まれの現代占術。古代中国の陰陽五行・干支理論を基盤としながら、西洋占星術の12星座的な発想を取り入れて日本人向けに再構成した。六星（土星・金星・火星・天王星・木星・水星）と陰陽（各星に「陰」と「陽」）の組み合わせで12種類に人間を分類する体系が特徴。「大殺界」（3年間の運気低下期）という概念が特に有名で、1980〜90年代に日本で爆発的なブームを起こし、数千万部規模の書籍を販売した。',
+    method:'生年月日から六星（土星・金星・火星・天王星・木星・水星）のいずれかと陰陽（各星に陰・陽の2種）を算出して12タイプに分類。毎年発行される「年運」本で年・月の運気サイクル（12年周期）を確認し、「大殺界」「種まき期」「収穫期」などのフェーズを意識した行動指針を得る。西洋の十二星座との互換性も持ち、より直感的に理解できる設計になっている。',
+    similar:['西洋占星術（12分類・周期概念）','九星気学（運気サイクル）','四柱推命（干支基盤）','算命学（天中殺対比）']
+  },
+  {
+    id:'gogyo',emoji:'🌿',name:'五行占い',country:'🈳 中国（春秋・戦国時代 紀元前6〜3世紀）',
+    history:'古代中国で宇宙のすべての現象を「木・火・土・金・水」の5つの元素の相互作用で説明しようとした「五行思想」が起源。「相生（木→火→土→金→水→木…）」と「相克（木→土→水→火→金→木…）」という循環関係が万物の変化を支配すると考えられた。医学（漢方・鍼灸）・政治・軍事・建築（風水）・占術など中国文化のあらゆる分野に浸透した。四柱推命・算命学・九星気学・紫微斗数などほぼすべての東洋占術の理論的基盤となっており、「東洋占術の共通言語」とも言える。',
+    method:'生まれた年の干支から「五行（木・火・土・金・水）」のどれに属するかを算出。各五行には性格・才能・体質・色・方位・季節・臓器の対応関係があり、持って生まれた五行バランスを分析して運命を読む。「相生」関係にある五行が助けになり、「相克」関係にある五行が課題となる。年・月・日の五行の重なりで「今年は何の五行を補うべきか」という実践的な行動指針も導ける。',
+    similar:['四柱推命（五行計算の応用）','算命学（陰陽五行基盤）','九星気学（五行方位）','漢方医学（五行体質分類）']
+  },
+  {
+    id:'takashima',emoji:'📅',name:'高島暦',country:'🇯🇵 日本（明治時代）',
+    history:'明治時代の実業家・易学者・高島嘉右衛門（1832〜1914）が中国の易経（えききょう）を日本の実情に合わせて体系化した占術。高島は幕末から明治にかけて数々の歴史的事件（日清・日露戦争の行方など）を易で的中させたとされ、「高島易断」として明治社会で絶大な影響力を持った。六十四卦（易の64種の組み合わせ）を干支暦（旧暦）と組み合わせ、その年・月・日・時の吉凶を判断する「高島暦」は現在も毎年刊行される最も歴史ある日本の運勢暦である。',
+    method:'六十四卦（64通りの卦象）を基本に、その年の干支・節気・月の満ち欠けを組み合わせて年間・月別・日別の運勢を読む。個人の誕生年干支と当年干支の「相生・相克」関係から吉凶を判定。現代では「大安・仏滅・先勝…」の六曜も高島暦体系の一部として記載されており、冠婚葬祭の日取り選びに広く使われている。易の卦を筮竹（ぜいちく）や硬貨を使って立てる体験型占いとしても実践される。',
+    similar:['算命学（干支基盤）','九星気学（暦活用）','四柱推命（年干支）','易占い（六十四卦）']
+  },
+  {
+    id:'vedic',emoji:'🕉',name:'インド占星術',country:'🇮🇳 インド（ヴェーダ時代・紀元前1500年以前）',
+    history:'「ジョーティッシュ（Jyotish）」とも呼ばれ、古代インドの聖典「ヴェーダ」の補助学問として約5000年の歴史を持つ世界最古級の占星術体系。西洋占星術と共通のルーツを持つが、西洋が「春分点固定の黄道帯（熱帯占星術）」を使うのに対し、インド占星術は「実際の星座位置（恒星黄道帯）」を使う点が根本的に異なる（約23〜24度のズレがある）。チャンドラ・ラグナ（月星座）・ナクシャトラ（27の月宿）・ダシャー（惑星期間）が主要概念。現代でもインド人の約8割が結婚・就職などで鑑定を受けると言われる。',
+    method:'出生チャート（ラグナチャート）を作成し、上昇星座（ラグナ）を第一ハウスとして各惑星の配置を9つのグラハ（太陽・月・火・水・木・金・土・ラーフ・ケートゥ）で読む。西洋占星術と最大の違いは「ナクシャトラ（27月宿）」の活用と、「ヴィムショッタリ・ダシャー（120年周期の惑星期間）」による精密な時期読み。カルマと前世の概念も組み込まれ、魂の成長という観点からも運命を読む。',
+    similar:['西洋占星術（共通ルーツ）','紫微斗数（星配置命盤）','マヤ暦（星と周期）','ケルト樹木占い（自然周期）']
+  },
+  {
+    id:'maya',emoji:'🌅',name:'マヤ暦',country:'🌎 メソアメリカ（マヤ文明・紀元前3000年頃〜）',
+    history:'メソアメリカのマヤ文明が使用した「ツォルキン暦（神聖暦）」は20の日紋（ナワル）×13の音（トーン）＝260日周期の暦。農業・祭礼・人の誕生日の意味を読むために使われた。マヤ人は時間を「螺旋状に繰り返す生きたエネルギー」と捉え、各日に固有の振動と意味があると信じた。1990年代以降、メキシコのマヤ暦研究者ホセ・アグエイアスの著作を通じて日本でも爆発的にブームとなり、「マヤ暦占い師」が多数誕生した。「2012年12月21日に時代が変わる」という予言でも世界的に注目を浴びた。',
+    method:'生年月日を「ツォルキン暦」の対応する「KIN番号（1〜260）」に変換。KIN番号は「20の日紋（アハウ・イミシュ・アカバル…）」と「13の音（1〜13のトーン）」の組み合わせで構成される。日紋が持つ性質（力・使命・テーマ）とトーンが表すエネルギーの強さから、魂の本質・才能・人生の使命を読み解く。260日周期のサイクルで毎日の「当日のエネルギー」を確認する実践法もある。',
+    similar:['西洋占星術（宇宙周期）','インド占星術（星と周期）','ネイティブアメリカンのメディスンカード','九星気学（周期概念）']
+  },
+  {
+    id:'rune',emoji:'ᚠ',name:'ルーン占い',country:'🌿 北欧・ゲルマン（紀元前1〜2世紀）',
+    history:'北欧・ゲルマン民族が使用した「ルーン文字（Runes）」は単なる文字体系を超え、神秘的な力を持つ聖なる刻み文字として信仰された。北欧神話の最高神オーディンが9日間世界樹ユグドラシルに逆さ吊りになって苦行の末にルーンの秘密を会得したという神話が有名。古代フサルク（24文字）が占い・魔術・呪符として使われ、ヴァイキング時代には航海の安全や戦の吉凶を占う重要な術として機能した。中世には魔女狩りとともに一度禁止されたが、19〜20世紀の神秘主義ルネサンスで復活し、現代では世界中で実践されている。',
+    method:'伝統的には24文字の「古フサルク」のルーン石やタイルをポーチに入れ、問いを立てながら引く。「1枚引き（現在の状況）」「3枚引き（過去・現在・未来）」「ノルンの展開（運命・現状・潜在力）」など展開法が多様。本占いでは「誕生ルーン（Birthday Rune）」として生まれた月日をルーン24文字に対応させ、生涯の守護ルーンとして個人の本質と使命を読み解く。各ルーンには家畜・旅・喜び・守護・太陽など原始的な象徴が込められている。',
+    similar:['ケルト樹木占い（北欧・ケルト文化圏）','タロットカード（象徴体系）','オガム占い（ケルト文字占い）','西洋占星術（ゲルマン発展）']
+  },
+];
+
+/* Build guide grid */
+(function(){
+  const grid=document.getElementById('guide-grid');
+  if(!grid)return;
+  GUIDE_DATA.forEach((g,i)=>{
+    const card=document.createElement('div');
+    card.className='guide-card';
+    card.innerHTML=`
+      <span class="gc-emoji">${g.emoji}</span>
+      <div class="gc-name">${g.name}</div>
+      <div class="gc-country">${g.country.replace(/^[^\s]+ /,'')}</div>
+      <span class="gc-link">詳細を読む ›</span>
+    `;
+    card.onclick=()=>openGuide(i);
+    grid.appendChild(card);
+  });
+})();
+
+function openGuide(idx){
+  const g=GUIDE_DATA[idx];
+  document.getElementById('gm-emoji').textContent=g.emoji;
+  document.getElementById('gm-title').textContent=g.name;
+  document.getElementById('gm-origin').textContent=g.country;
+  document.getElementById('gm-body').innerHTML=`
+    <div class="gm-sec">
+      <div class="gm-sec-label">📜 生い立ち・歴史</div>
+      <div class="gm-sec-text">${g.history}</div>
+    </div>
+    <div class="gm-sec">
+      <div class="gm-sec-label">🔮 占い方・鑑定の仕組み</div>
+      <div class="gm-sec-text">${g.method}</div>
+    </div>
+  `;
+  document.getElementById('gm-similar').innerHTML=`
+    <div class="gm-sim-label">◈ 似ている占術</div>
+    <div class="gm-sim-tags">${g.similar.map(s=>`<span class="gm-sim-tag">${s}</span>`).join('')}</div>
+  `;
+  document.getElementById('guide-modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeGuideModal(){
+  document.getElementById('guide-modal-bg').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function closeGuide(e){
+  if(e.target===document.getElementById('guide-modal-bg'))closeGuideModal();
+}
+
+// ESC key to close
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeGuideModal();});
+
 </script>
 </body>
 </html>
