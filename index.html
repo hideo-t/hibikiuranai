@@ -338,6 +338,17 @@ body{
 }
 .res-archetype span{color:var(--gold);font-weight:500}
 
+/* Daily fortune badge */
+.daily-fortune{
+  margin-top:16px;padding:12px 20px;
+  background:rgba(201,168,76,0.08);
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:14px;
+  display:inline-block;
+}
+.daily-fortune-label{font-size:10px;color:var(--text-dim);letter-spacing:0.2em;margin-bottom:6px}
+.daily-fortune-text{font-size:14px;color:var(--gold-lt);letter-spacing:0.08em}
+
 /* Cards container */
 .cards-wrap{width:100%;max-width:720px;z-index:1;position:relative}
 
@@ -378,9 +389,10 @@ body{
 .ch-sub{font-size:11px;color:var(--text-dim);letter-spacing:0.2em;margin-top:3px}
 
 /* Stars */
-.c-stars{display:flex;gap:4px;margin-bottom:14px}
+.c-stars{display:flex;gap:4px;margin-bottom:14px;align-items:center}
 .c-star{font-size:18px;color:var(--gold);filter:drop-shadow(0 0 5px rgba(201,168,76,.5))}
 .c-star.off{color:rgba(201,168,76,0.15);filter:none}
+.star-label{font-size:11px;color:var(--text-mid);margin-left:10px}
 
 .c-text{
   font-size:14px;line-height:2.1;color:var(--text);
@@ -394,6 +406,53 @@ body{
   padding:5px 14px;border-radius:20px;
   margin-top:14px;letter-spacing:0.15em;
 }
+
+/* Biorhythm Section */
+.biorhythm-section{
+  margin-top:20px;padding-top:18px;
+  border-top:1px solid rgba(201,168,76,0.15);
+}
+.bio-title{
+  font-size:11px;letter-spacing:0.2em;color:var(--gold);
+  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.bio-title::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(201,168,76,0.3),transparent);
+}
+.bio-chart{
+  height:80px;
+  background:rgba(0,0,0,0.2);
+  border-radius:10px;
+  position:relative;
+  overflow:hidden;
+}
+.bio-chart canvas{
+  width:100%;height:100%;
+}
+.bio-legend{
+  display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;
+}
+.bio-legend-item{
+  display:flex;align-items:center;gap:5px;
+  font-size:10px;color:var(--text-mid);
+}
+.bio-legend-dot{
+  width:8px;height:8px;border-radius:50%;
+}
+.bio-values{
+  display:flex;gap:12px;margin-top:10px;
+}
+.bio-value{
+  flex:1;text-align:center;
+  padding:8px;
+  background:rgba(201,168,76,0.05);
+  border-radius:8px;
+  border:1px solid rgba(201,168,76,0.15);
+}
+.bio-value-label{font-size:9px;color:var(--text-dim);letter-spacing:0.1em;margin-bottom:4px}
+.bio-value-num{font-size:16px;font-weight:600;color:var(--gold-lt)}
+.bio-value-pct{font-size:10px;color:var(--text-mid)}
 
 /* Action buttons */
 .act-row{
@@ -539,148 +598,31 @@ body{
 .gm-sim-tag{font-size:11px;color:#aab8ff;background:rgba(67,97,238,.12);border:1px solid rgba(67,97,238,.25);border-radius:20px;padding:4px 12px;letter-spacing:0.08em}
 
 /* ====================================================
-   PRINT STYLES — A4 最適化
+   PRINT STYLES
    ==================================================== */
 @media print {
   @page {
     size: A4 portrait;
     margin: 14mm 16mm 16mm 16mm;
   }
-
-  /* 非表示：星・入力・アニメ・ボタン類 */
-  #starfield, #s-input, #s-anim, .act-row, .toast { display:none !important; }
-
+  #starfield, #s-input, #s-anim, .act-row, .toast, .biorhythm-section { display:none !important; }
   body {
     background: #ffffff !important;
     color: #1a1a2e !important;
     font-size: 10.5pt;
   }
-
-  /* 全画面を非表示にした上で結果画面だけ表示 */
   .screen { display: none !important; }
   #s-res  { display: flex !important; flex-direction: column; align-items: center; }
-
-  /* ヘッダー */
-  .res-typelabel {
-    color: #7a5c00 !important;
-    font-size: 9pt;
-    letter-spacing: 0.25em;
-    margin-bottom: 4pt;
-  }
-  .res-typename {
-    color: #1a1226 !important;
-    font-size: 18pt;
-    font-weight: 700;
-    margin-bottom: 6pt;
-  }
-  .g-divider {
-    border-color: #c9a84c !important;
-    margin: 6pt auto;
-  }
-  .res-info-pill {
-    background: transparent !important;
-    border: 1px solid #c9a84c !important;
-    color: #7a5c00 !important;
-    font-size: 8.5pt;
-    padding: 3pt 14pt;
-    margin-bottom: 5pt;
-  }
-  .res-archetype {
-    color: #444 !important;
-    font-size: 8.5pt;
-    margin-bottom: 10pt;
-  }
-  .res-archetype span { color: #7a5c00 !important; }
-
-  /* カードラッパー：2カラムグリッドに */
-  .cards-wrap {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 8pt;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-  }
-
-  /* カード本体 */
+  .res-typelabel { color: #7a5c00 !important; }
+  .res-typename { color: #1a1226 !important; }
   .cat-card {
     background: #fafaf7 !important;
     border: 1px solid #d4b96a !important;
-    border-radius: 8pt !important;
-    padding: 10pt 11pt !important;
-    margin-bottom: 0 !important;
     opacity: 1 !important;
-    transform: none !important;
     animation: none !important;
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-  .cat-card::before { display: none !important; }
-
-  /* カードヘッダ */
-  .ch {
-    display: flex;
-    align-items: center;
-    gap: 7pt;
-    margin-bottom: 5pt;
-  }
-  .ch-icon {
-    width: 26pt; height: 26pt;
-    font-size: 14pt;
-    background: transparent !important;
-    border: 1.5px solid #c9a84c;
-    border-radius: 5pt;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: none !important;
-  }
-  .ch-ttl {
-    color: #1a1226 !important;
-    font-size: 10pt;
-    font-weight: 700;
-  }
-  .ch-sub {
-    color: #7a7a7a !important;
-    font-size: 7.5pt;
-  }
-
-  /* 星 */
-  .c-stars { margin: 3pt 0; }
-  .c-star { color: #c9a84c !important; font-size: 9pt; }
-  .c-star.off { color: #ccc !important; }
-
-  /* 本文 */
-  .c-text {
-    color: #2a2a3e !important;
-    font-size: 8pt;
-    line-height: 1.65;
-    margin: 4pt 0;
-  }
-
-  /* キーワード */
-  .c-kw {
-    color: #7a5c00 !important;
-    font-size: 7.5pt;
-    letter-spacing: 0.12em;
-    border-top: 1px solid #e8d9a0 !important;
-    padding-top: 4pt;
-    margin-top: 4pt;
-    background: transparent !important;
-  }
-
-  /* フッター的な印刷日時 */
-  #s-res::after {
-    content: "ロイヤル響オリジナル占い　✦　" attr(data-printdate);
-    display: block;
-    text-align: center;
-    font-size: 7pt;
-    color: #aaa;
-    margin-top: 10pt;
-    letter-spacing: 0.15em;
   }
 }
 
-
-   ==================================================== */
 @media(max-width:400px){
   .date-row{flex-direction:column}
   .date-row select{padding:12px 14px}
@@ -788,6 +730,10 @@ body{
     <div class="g-divider"></div>
     <div class="res-info-pill" id="r-info"></div>
     <div class="res-archetype" id="r-arch"></div>
+    <div class="daily-fortune" id="daily-fortune">
+      <div class="daily-fortune-label">✦ 今日の運勢 ✦</div>
+      <div class="daily-fortune-text" id="daily-text"></div>
+    </div>
   </div>
 
   <div class="cards-wrap" id="cards-wrap"></div>
@@ -897,6 +843,7 @@ const ANIM_MSGS=[
   '宇宙の法則があなたの本質を照らし出しています',
   '生命の暗号が今、解き明かされていきます',
 ];
+
 let msgTimer=null,msgIdx=0;
 function startMsgCycle(){
   msgIdx=0;
@@ -946,27 +893,30 @@ function startFortune(){
 }
 
 /* ===========================
-   FORTUNE CALCULATORS
+   FORTUNE CALCULATORS (12 archetypes)
    =========================== */
 
-/* 1. Western Zodiac → 0-11 → %9 */
+/* 1. Western Zodiac → 0-11 */
 function calcZodiac(m,d){
   const cusps=[20,19,21,20,21,22,23,23,23,24,23,22];
   const names=['牡羊座','牡牛座','双子座','蟹座','獅子座','乙女座','天秤座','蠍座','射手座','山羊座','水瓶座','魚座'];
   let s=m-1;if(d<cusps[m-1])s=(m-2+12)%12;
-  return{idx:s%9,label:names[s]};
+  return{idx:s,label:names[s]};
 }
 
-/* 2. Numerology Life Path 1-9 */
+/* 2. Numerology Life Path 1-9,11,22 → mapped to 12 */
 function calcNumerology(y,m,d){
   let s=0;
   (''+(y+m+d)).split('').forEach(x=>s+=parseInt(x)||0);
-  while(s>9)s=(''+ s).split('').reduce((a,x)=>a+(parseInt(x)||0),0);
+  while(s>9 && s!==11 && s!==22)s=(''+ s).split('').reduce((a,x)=>a+(parseInt(x)||0),0);
   if(!s)s=9;
-  return{idx:(s-1)%9,label:'ライフパスナンバー '+s};
+  const map={1:0,2:1,3:2,4:3,5:4,6:5,7:6,8:7,9:8,11:9,22:10};
+  const idx=map[s]!==undefined?map[s]:s%12;
+  const label=s===11?'マスターナンバー11':s===22?'マスターナンバー22':'ライフパスナンバー '+s;
+  return{idx:idx%12,label};
 }
 
-/* 3. Celtic Tree (simplified) */
+/* 3. Celtic Tree (13 trees → 12) */
 function calcCeltic(m,d){
   const doy=(m2,d2)=>{const dpm=[0,31,59,90,120,151,181,212,243,273,304,334];return dpm[m2-1]+d2;};
   const cur=doy(m,d);
@@ -980,106 +930,105 @@ function calcCeltic(m,d){
     {s:[6,10], e:[7,7], name:'オークの木',  idx:6},
     {s:[7,8],  e:[8,4], name:'リンゴの木',  idx:7},
     {s:[8,5],  e:[9,1], name:'ニワトコの木',idx:8},
-    {s:[9,2],  e:[9,29],name:'オリーブの木',idx:0},
-    {s:[9,30], e:[10,27],name:'ヘーゼルナッツの木',idx:1},
-    {s:[10,28],e:[11,24],name:'リードの木', idx:2},
-    {s:[11,25],e:[12,23],name:'ブナの木',   idx:3},
+    {s:[9,2],  e:[9,29],name:'オリーブの木',idx:9},
+    {s:[9,30], e:[10,27],name:'ヘーゼルナッツの木',idx:10},
+    {s:[10,28],e:[11,24],name:'リードの木', idx:11},
+    {s:[11,25],e:[12,23],name:'ブナの木',   idx:0},
   ];
   for(const t of trees){
     const ss=doy(t.s[0],t.s[1]),ee=doy(t.e[0],t.e[1]);
-    if(ss<=ee){if(cur>=ss&&cur<=ee)return{idx:t.idx,label:t.name};}
-    else{if(cur>=ss||cur<=ee)return{idx:t.idx,label:t.name};}
+    if(ss<=ee){if(cur>=ss&&cur<=ee)return{idx:t.idx%12,label:t.name};}
+    else{if(cur>=ss||cur<=ee)return{idx:t.idx%12,label:t.name};}
   }
   return{idx:0,label:'ヒイラギの木'};
 }
 
-/* 4. Four Pillars (year heavenly stem) */
+/* 4. Four Pillars (year heavenly stem + branch) */
 function calcShichu(y){
   const stems=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
   const branches=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const si=((y-4)%10+10)%10,bi=((y-4)%12+12)%12;
-  return{idx:si%9,label:stems[si]+branches[bi]+'年の命'};
+  return{idx:bi,label:stems[si]+branches[bi]+'年の命'};
 }
 
-/* 5. Sanmei-gaku (simplified sum) */
+/* 5. Sanmei-gaku */
 function calcSanmei(y,m,d){
-  let n=(y+m+d)%9;if(!n)n=9;
-  const labels=['天将星','龍高星','石門星','鳳閣星','調舒星','禄存星','司禄星','牽牛星','玉堂星'];
-  return{idx:(n-1)%9,label:labels[(n-1)%9]+'命'};
+  let n=(y+m+d)%12;if(!n)n=12;
+  const labels=['天将星','龍高星','石門星','鳳閣星','調舒星','禄存星','司禄星','牽牛星','車騎星','玉堂星','天庫星','天印星'];
+  return{idx:(n-1)%12,label:labels[(n-1)%12]+'命'};
 }
 
 /* 6. Nine Star Ki */
 function calcKyusei(y,m){
   let yr=m<=1?y-1:y;
-  let n=((1-(yr-2000))%9+9)%9;if(!n)n=9;
+  let n=((11-(yr-2000))%9+9)%9;if(!n)n=9;
   const stars=['一白水星','二黒土星','三碧木星','四緑木星','五黄土星','六白金星','七赤金星','八白土星','九紫火星'];
-  return{idx:(n-1)%9,label:stars[n-1]};
+  const idx=(n-1);
+  return{idx:idx%12,label:stars[idx%9]};
 }
 
-/* 7. Zi Wei simplified (by month × day half) */
+/* 7. Zi Wei (12 stars) */
 function calcShibi(m,d){
   const stars=['紫微星','天機星','太陽星','武曲星','天同星','廉貞星','天府星','太陰星','貪狼星','巨門星','天相星','天梁星'];
   const i=((m-1)*2+(d>15?1:0))%12;
-  return{idx:i%9,label:stars[i]+'命'};
+  return{idx:i,label:stars[i]+'命'};
 }
 
-/* 8. Rokusei (細木式 simplified) */
+/* 8. Rokusei (12 types) */
 function calcRokusei(y,m,d){
-  const stars=['金星人','天王星人','火星人','地球星人','木星人','水星人'];
-  const n=((y+m+d)%6+6)%6;
-  return{idx:n%9,label:stars[n]};
+  const stars=['金星人(+)','金星人(-)','天王星人(+)','天王星人(-)','火星人(+)','火星人(-)','地球星人(+)','地球星人(-)','木星人(+)','木星人(-)','水星人(+)','水星人(-)'];
+  const n=((y+m+d)%12+12)%12;
+  return{idx:n,label:stars[n]};
 }
 
-/* 9. Five Elements (by year) */
+/* 9. Five Elements (detailed) */
 function calcGogyo(y){
-  const elem=['木','木','火','火','土','土','金','金','水','水'];
-  const desc={木:'木行',火:'火行',土:'土行',金:'金行',水:'水行'};
-  const map ={木:0,火:1,土:2,金:3,水:4};
+  const elem=['木陽','木陰','火陽','火陰','土陽','土陰','金陽','金陰','水陽','水陰'];
   const i=((y-2000)%10+10)%10;
-  const e=elem[i];
-  return{idx:map[e]%9,label:desc[e]+'生まれ'};
+  return{idx:i%12,label:elem[i]+'生まれ'};
 }
 
-/* 10. Takashima-reki (干支) */
+/* 10. Takashima-reki */
 function calcTakashima(y){
   const stems=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
   const br=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const si=((y-2000)%10+10)%10,bi=((y-2000)%12+12)%12;
-  return{idx:si%9,label:stems[si]+br[bi]+'年（高島暦）'};
+  return{idx:bi,label:stems[si]+br[bi]+'年（高島暦）'};
 }
 
-/* 11. Vedic/Nakshatra (27 nakshatras) */
+/* 11. Vedic/Nakshatra (27 → 12) */
 function calcVedic(m,d){
-  const nk=['アシュヴィニー','バラニー','クリッティカー','ローヒニー','ムリガシラー','アールドラー','プナルヴァス','プシュヤ','アーシュレーシャー','マガー','プールヴァ・パールグニー','ウッタラ・パールグニー','ハスタ','チトラー','スヴァーティー','ヴィシャーカー','アヌラーダー','ジェーシュタ','ムーラ','プールヴァ・アーシャーダー','ウッタラ・アーシャーダー','シュラヴァナ','ダニシュタ','シャタビシャーク','プールヴァ・バードラパダー','ウッタラ・バードラパダー','レーヴァティー'];
+  const nk=['アシュヴィニー','バラニー','クリッティカー','ローヒニー','ムリガシラー','アールドラー','プナルヴァス','プシュヤ','アーシュレーシャー','マガー','プールヴァ・パールグニー','ウッタラ・パールグニー'];
   const dpm=[0,31,59,90,120,151,181,212,243,273,304,334];
   const doy=dpm[m-1]+d;
-  const ni=Math.floor((doy-1)/365*27)%27;
-  return{idx:ni%9,label:nk[ni]+'（ナクシャトラ）'};
+  const ni=Math.floor((doy-1)/365*12)%12;
+  return{idx:ni,label:nk[ni]+'（ナクシャトラ）'};
 }
 
-/* 12. Maya Tzolkin */
+/* 12. Maya Tzolkin (20 signs → 12) */
 function calcMaya(y,m,d){
-  const signs=['イミシュ','イク','アクバル','カン','チクチャン','キミ','マニク','ラマト','ムルク','オク','チュエン','エブ','ベン','イシュ','メン','キブ','カバン','エツナブ','カワク','アハウ'];
+  const signs=['イミシュ','イク','アクバル','カン','チクチャン','キミ','マニク','ラマト','ムルク','オク','チュエン','エブ'];
   const ref=new Date(2000,0,1),birth=new Date(y,m-1,d);
   const diff=Math.round((birth-ref)/864e5);
-  const ds=((2+diff)%20+20)%20;
+  const ds=((2+diff)%12+12)%12;
   const tone=((10+diff)%13+13)%13+1;
-  return{idx:ds%9,label:'銀河の音'+tone+'・'+signs[ds]};
+  return{idx:ds,label:'銀河の音'+tone+'・'+signs[ds]};
 }
 
-/* 13. Birth Rune */
+/* 13. Birth Rune (24 → 12) */
 function calcRune(m,d){
-  const runes=['ᚠ フェフ','ᚢ ウルズ','ᚦ スリサズ','ᚨ アンスズ','ᚱ ライソ','ᚲ ケナズ','ᚷ ゲボ','ᚹ ウンジョ','ᚺ ハガラズ','ᚾ ナウシズ','ᛁ イサ','ᛃ イェラ','ᛇ エイワズ','ᛈ ペルソ','ᛉ エルハズ','ᛊ ソウィロ','ᛏ テイワズ','ᛒ ベルカノ','ᛖ エワズ','ᛗ マナズ','ᛚ ラグズ','ᛜ イングワズ','ᛞ ダガズ','ᛟ オサラ'];
-  const i=((m-1)*2+(d<=15?0:1))%24;
-  return{idx:i%9,label:runes[i]};
+  const runes=['ᚠ フェフ','ᚢ ウルズ','ᚦ スリサズ','ᚨ アンスズ','ᚱ ライソ','ᚲ ケナズ','ᚷ ゲボ','ᚹ ウンジョ','ᚺ ハガラズ','ᚾ ナウシズ','ᛁ イサ','ᛃ イェラ'];
+  const i=((m-1)+(d<=15?0:1))%12;
+  return{idx:i,label:runes[i]};
 }
 
-/* 14. Sogo (blend of zodiac + numerology + kyusei) */
+/* 14. Sogo (blend) */
 function calcSogo(y,m,d){
   const a=calcZodiac(m,d).idx;
   const b=calcNumerology(y,m,d).idx;
-  const c=calcKyusei(y,m).idx;
-  return{idx:Math.round((a+b+c)/3)%9,label:'複数占術による統合鑑定'};
+  const c=calcShichu(y).idx;
+  const e=calcShibi(m,d).idx;
+  return{idx:Math.round((a+b+c+e)/4)%12,label:'複数占術による統合鑑定'};
 }
 
 const CALCS=[
@@ -1099,159 +1048,271 @@ const CALCS=[
   (y,m,d)=>calcSogo(y,m,d),
 ];
 
-function computeFortune(ti,y,m,d,gender){
-  const calc=CALCS[ti](y,m,d);
-  const ai=calc.idx;
-  const arch=ARCHETYPES[ai];
-  const type=TYPES[ti];
-  const cats=CATS.map((cat,ci)=>({
-    ...cat,
-    text:CONTENT[ai][ci],
-    stars:STARS[ai][ci],
-    kw:KEYWORDS[ai][ci],
-  }));
-  return{typeName:type.name,typeEmoji:type.emoji,label:calc.label,arch,cats,gender,y,m,d};
+/* ===========================
+   DYNAMIC STAR CALCULATION
+   =========================== */
+function calcDynamicStars(archIdx, catIdx, y, m, d){
+  // Base star from archetype affinity
+  const baseMatrix = [
+    // 恋愛, 金運, 健康, 人間関係, 適性
+    [5,4,3,4,5], // 0 先駆者
+    [4,5,4,4,4], // 1 安定者
+    [4,4,4,5,5], // 2 探求者
+    [4,5,5,4,4], // 3 感性者
+    [5,4,3,5,4], // 4 情熱家
+    [4,5,4,4,5], // 5 調和者
+    [3,4,5,4,4], // 6 堅実者
+    [5,3,4,5,4], // 7 自由人
+    [4,4,4,4,5], // 8 変革者
+    [5,5,4,4,4], // 9 達成者
+    [4,4,5,5,4], // 10 奉仕者
+    [5,4,4,4,5], // 11 賢者
+  ];
+
+  const base = baseMatrix[archIdx % 12][catIdx];
+
+  // Daily variation (-1 to +1)
+  const today = new Date();
+  const dayFactor = ((today.getDate() + m + catIdx) % 3) - 1;
+
+  // Month compatibility
+  const monthBonus = ((today.getMonth() + 1 + archIdx) % 4 === 0) ? 1 : 0;
+
+  // Birth day influence
+  const birthDayBonus = (d % 5 === catIdx) ? 0.5 : 0;
+
+  let stars = base + dayFactor * 0.3 + monthBonus * 0.3 + birthDayBonus;
+  stars = Math.max(1, Math.min(5, Math.round(stars)));
+
+  return stars;
 }
 
 /* ===========================
-   ARCHETYPES (9)
+   BIORHYTHM CALCULATION
+   =========================== */
+function calcBiorhythm(birthDate, category){
+  const today = new Date();
+  const birth = new Date(birthDate.y, birthDate.m - 1, birthDate.d);
+  const days = Math.floor((today - birth) / 86400000);
+
+  // Different cycles for different categories
+  const cycles = {
+    0: [23, 28, 33],  // 恋愛: Physical, Emotional, Intellectual
+    1: [23, 33, 38],  // 金運: Physical, Intellectual, Intuitive
+    2: [23, 28, 43],  // 健康: Physical, Emotional, Wellness
+    3: [28, 33, 38],  // 人間関係: Emotional, Intellectual, Social
+    4: [33, 38, 43],  // 適性: Intellectual, Intuitive, Spiritual
+  };
+
+  const [short, mid, long] = cycles[category];
+
+  return {
+    short: Math.sin((2 * Math.PI * days) / short) * 100,
+    mid: Math.sin((2 * Math.PI * days) / mid) * 100,
+    long: Math.sin((2 * Math.PI * days) / long) * 100,
+    cycles: {short, mid, long}
+  };
+}
+
+/* ===========================
+   DAILY FORTUNE
+   =========================== */
+function getDailyFortune(archIdx){
+  const today = new Date();
+  const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate() + archIdx;
+  const rng = (seed * 9301 + 49297) % 233280;
+  const idx = rng % 12;
+
+  const fortunes = [
+    '大吉 — 何事も順調に進む最高の日です',
+    '吉 — 積極的な行動が幸運を呼びます',
+    '中吉 — 穏やかに過ごせば良いことが',
+    '小吉 — 小さな幸せを見つけられる日',
+    '末吉 — 夕方から運気上昇の兆し',
+    '吉 — 人との出会いに恵まれます',
+    '中吉 — 創造性が高まっています',
+    '小吉 — 慎重さが吉を呼びます',
+    '吉 — 直感を信じて行動を',
+    '大吉 — 願いが叶いやすい特別な日',
+    '中吉 — 学びの多い充実した日',
+    '吉 — 感謝の心が幸運を招きます',
+  ];
+
+  return fortunes[idx];
+}
+
+/* ===========================
+   ARCHETYPES (12)
    =========================== */
 const ARCHETYPES=[
   {name:'創造の先駆者',elem:'火',sym:'♈',color:'#e85d04',glow:'rgba(232,93,4,.3)',   kw:'開拓・情熱・革新'},
-  {name:'調和の守護者',elem:'水',sym:'♒',color:'#4361ee',glow:'rgba(67,97,238,.3)',  kw:'調和・愛・受容'},
+  {name:'安定の守護者',elem:'土',sym:'♉',color:'#558b2f',glow:'rgba(85,139,47,.3)', kw:'安定・誠実・継続'},
   {name:'知恵の探求者',elem:'風',sym:'♊',color:'#7b2d8b',glow:'rgba(123,45,139,.3)',kw:'知識・思考・真理'},
-  {name:'変革の触媒',  elem:'火',sym:'♏',color:'#c62828',glow:'rgba(198,40,40,.3)', kw:'変容・再生・深化'},
-  {name:'大地の礎',    elem:'土',sym:'♉',color:'#558b2f',glow:'rgba(85,139,47,.3)', kw:'安定・誠実・継続'},
-  {name:'自由の旅人',  elem:'風',sym:'♐',color:'#1565c0',glow:'rgba(21,101,192,.3)',kw:'自由・冒険・多様性'},
-  {name:'愛の奉仕者',  elem:'水',sym:'♋',color:'#ad1457',glow:'rgba(173,20,87,.3)', kw:'献身・共感・癒し'},
-  {name:'深淵の賢者',  elem:'水',sym:'♑',color:'#37474f',glow:'rgba(55,71,79,.3)',  kw:'洞察・神秘・静寂'},
-  {name:'輝く王者',    elem:'火',sym:'♌',color:'#f57f17',glow:'rgba(245,127,23,.3)',kw:'威厳・成功・指導'},
+  {name:'感性の育成者',elem:'水',sym:'♋',color:'#ad1457',glow:'rgba(173,20,87,.3)', kw:'感情・共感・育成'},
+  {name:'輝く情熱家',  elem:'火',sym:'♌',color:'#f57f17',glow:'rgba(245,127,23,.3)',kw:'威厳・成功・指導'},
+  {name:'調和の奉仕者',elem:'土',sym:'♍',color:'#00695c',glow:'rgba(0,105,92,.3)',  kw:'献身・分析・完璧'},
+  {name:'均衡の調停者',elem:'風',sym:'♎',color:'#4361ee',glow:'rgba(67,97,238,.3)',  kw:'調和・美・正義'},
+  {name:'深淵の変革者',elem:'水',sym:'♏',color:'#c62828',glow:'rgba(198,40,40,.3)', kw:'変容・再生・深化'},
+  {name:'自由の旅人',  elem:'火',sym:'♐',color:'#1565c0',glow:'rgba(21,101,192,.3)',kw:'自由・冒険・哲学'},
+  {name:'達成の建設者',elem:'土',sym:'♑',color:'#37474f',glow:'rgba(55,71,79,.3)',  kw:'野心・責任・達成'},
+  {name:'革新の博愛者',elem:'風',sym:'♒',color:'#00838f',glow:'rgba(0,131,143,.3)', kw:'革新・独立・人道'},
+  {name:'直感の夢想家',elem:'水',sym:'♓',color:'#6a1b9a',glow:'rgba(106,27,154,.3)',kw:'直感・芸術・神秘'},
 ];
 
 /* ===========================
    5 CATEGORIES
    =========================== */
 const CATS=[
-  {icon:'💕',title:'恋愛・結婚運',sub:'Love & Partnership',    cc:'rgba(255,80,130,.07)', cb:'rgba(255,80,130,.3)', cg:'rgba(255,80,130,.6)'},
-  {icon:'💰',title:'金運・仕事運',sub:'Fortune & Career',      cc:'rgba(201,168,76,.07)', cb:'rgba(201,168,76,.3)', cg:'rgba(201,168,76,.6)'},
-  {icon:'🌿',title:'健康運',      sub:'Health & Vitality',     cc:'rgba(80,180,80,.07)',  cb:'rgba(80,180,80,.3)',  cg:'rgba(80,180,80,.6)'},
-  {icon:'🤝',title:'人間関係・対人運',sub:'Relationships',      cc:'rgba(80,140,255,.07)', cb:'rgba(80,140,255,.3)', cg:'rgba(80,140,255,.6)'},
-  {icon:'✨',title:'適性・才能',  sub:'Gifts & Life Purpose',  cc:'rgba(160,80,255,.07)', cb:'rgba(160,80,255,.3)', cg:'rgba(160,80,255,.6)'},
+  {icon:'💕',title:'恋愛・結婚運',sub:'Love & Partnership',    cc:'rgba(255,80,130,.07)', cb:'rgba(255,80,130,.3)', cg:'rgba(255,80,130,.6)', bioColor:['#ff6b9d','#ff9ec4','#ffcce0']},
+  {icon:'💰',title:'金運・仕事運',sub:'Fortune & Career',      cc:'rgba(201,168,76,.07)', cb:'rgba(201,168,76,.3)', cg:'rgba(201,168,76,.6)', bioColor:['#c9a84c','#e0c97a','#f0dea8']},
+  {icon:'🌿',title:'健康運',      sub:'Health & Vitality',     cc:'rgba(80,180,80,.07)',  cb:'rgba(80,180,80,.3)',  cg:'rgba(80,180,80,.6)',  bioColor:['#4caf50','#81c784','#a5d6a7']},
+  {icon:'🤝',title:'人間関係・対人運',sub:'Relationships',      cc:'rgba(80,140,255,.07)', cb:'rgba(80,140,255,.3)', cg:'rgba(80,140,255,.6)', bioColor:['#42a5f5','#7ec8ff','#b3e0ff']},
+  {icon:'✨',title:'適性・才能',  sub:'Gifts & Life Purpose',  cc:'rgba(160,80,255,.07)', cb:'rgba(160,80,255,.3)', cg:'rgba(160,80,255,.6)', bioColor:['#ab47bc','#ce93d8','#e1bee7']},
 ];
 
 /* ===========================
-   STAR RATINGS [9][5]
-   =========================== */
-const STARS=[
-  [5,4,3,4,5], // 0 創造の先駆者
-  [4,3,4,5,4], // 1 調和の守護者
-  [3,5,4,3,5], // 2 知恵の探求者
-  [4,4,3,4,5], // 3 変革の触媒
-  [3,5,5,4,4], // 4 大地の礎
-  [5,4,3,5,4], // 5 自由の旅人
-  [5,3,3,5,4], // 6 愛の奉仕者
-  [4,4,4,3,5], // 7 深淵の賢者
-  [5,5,4,4,5], // 8 輝く王者
-];
-
-/* ===========================
-   KEYWORDS [9][5]
+   KEYWORDS [12][5]
    =========================== */
 const KEYWORDS=[
   ['運命の電撃',    '開拓型事業',     'エネルギー管理', 'リーダーの器',     '創造と革新'],
-  ['深まる信頼愛',  '堅実な積み重ね', '感情の浄化',     '調和の中心',       '愛の連鎖'],
+  ['深まる信頼愛',  '堅実な積み重ね', '体質の安定',     '長期的な信頼',     '継続の才'],
   ['知的な縁',      '知識が富を生む', '頭脳ケア',       '知的ネットワーク', '叡智と探求'],
+  ['魂を育む愛',    '感性で稼ぐ',     '感情の浄化',     '家族的な絆',       '育成の才能'],
+  ['王道の愛',      '頂点への財',     '心臓を護る',     '威厳のリーダー',   '輝きの使命'],
+  ['献身の純愛',    '細部が富を生む', '規律ある健康',   '職場の潤滑油',     '完璧主義'],
+  ['調和の良縁',    '美で稼ぐ',       'バランス健康',   '調停の要',         '美的才能'],
   ['魂の成長',      '逆境転化財',     'デトックス力',   '変革の推進力',     '再生と変容'],
-  ['信頼を育む愛',  '堅実な資産形成', '規律ある健康',   '縁の下の力持ち',   '大地の安定'],
   ['自由な縁',      '多角的収入',     '旅する心身',     '多様な人脈',       '国際的才能'],
-  ['献身の純愛',    '奉仕が富を生む', '自己ケアが鍵',   '愛の場の中心',     '癒しの使命'],
-  ['魂のつながり',  '洞察力で稼ぐ',   '浄化と静寂',     '深き理解者',       '真理の探求'],
-  ['王道の愛',      '頂点への財',     '心臓を護る',     '威厳のリーダー',   '頂点への使命'],
+  ['運命の出会い',  '野心の達成',     '骨格の管理',     '権威との関係',     '組織運営'],
+  ['友情から愛へ',  '革新で稼ぐ',     '神経系ケア',     '同志との絆',       '人道的使命'],
+  ['魂のつながり',  '直感で稼ぐ',     '浄化と静寂',     '精神的な絆',       '芸術の才'],
 ];
 
 /* ===========================
-   CONTENT DATABASE [9][5]
+   CONTENT DATABASE [12][5]
    ========================= */
 const CONTENT=[
   /* 0: 創造の先駆者 */
   [
-    'あなたの恋愛は電撃のように始まります。情熱的で一途な性質から、運命の出会いを本能で感じ取る力があります。束縛を嫌い、自由に輝き合えるパートナーを強く求めるため、お互いの個性を最大限に尊重できる関係こそが真の幸福をもたらします。30代前後に魂を揺さぶるような深い縁が訪れるでしょう。恋愛を通じてあなた自身もさらに大きく成長していきます。',
-    '独創的なアイデアと揺るぎない行動力が財運を切り開きます。会社員より独立した立場でこそ真価を発揮するタイプです。35歳前後に大きな転機が訪れ、自ら事業を立ち上げることで富が加速します。リスクを恐れず果敢に挑戦する姿勢が、長期的な財の積み上げにつながります。直感を信じて進んだとき、想像を超えた豊かさが手に入るでしょう。',
+    'あなたの恋愛は電撃のように始まります。情熱的で一途な性質から、運命の出会いを本能で感じ取る力があります。束縛を嫌い、自由に輝き合えるパートナーを強く求めるため、お互いの個性を最大限に尊重できる関係こそが真の幸福をもたらします。30代前後に魂を揺さぶるような深い縁が訪れるでしょう。',
+    '独創的なアイデアと揺るぎない行動力が財運を切り開きます。会社員より独立した立場でこそ真価を発揮するタイプです。35歳前後に大きな転機が訪れ、自ら事業を立ち上げることで富が加速します。リスクを恐れず果敢に挑戦する姿勢が、長期的な財の積み上げにつながります。',
     '旺盛なエネルギーと高い体力に恵まれています。ただし燃え尽き症候群には細心の注意が必要です。頭部・神経系が敏感なため、週に一度はデジタルデトックスと十分な睡眠を確保することが長寿の秘訣。激しいスポーツや自然の中での活動で気を発散させることが心身バランスの鍵となります。',
     '自然とリーダーシップを発揮し、周囲を引っ張っていく存在です。ただしペースが速すぎて周りを置き去りにしてしまうことも。「聴く力」を意識的に磨くことで、職場・家族・友人との関係が劇的に豊かになります。あなたの熱量と行動力は、周囲を動かす最大の武器です。',
     '革新・創造・開拓があなたの天与の才能です。誰も踏み込んでいない未開の分野でこそ輝きます。起業家、アーティスト、プロデューサー、スポーツ選手など、時代の先頭に立つ職業が天職。あなたの使命は「新しい道を力強く切り拓き、後に続く人々に希望の光を示すこと」です。',
   ],
-  /* 1: 調和の守護者 */
+  /* 1: 安定の守護者 */
   [
-    '温かみと包容力が自然ににじみ出るあなたは、相手を癒す生まれながらのギフトを持っています。恋愛は焦らず縁を育むタイプ。一目惚れより、長い時間をかけて深まる信頼が真の愛へと昇華します。穏やかで誠実なパートナーとの出会いが、28歳前後に静かに訪れます。関係を大切に育てることで、一生続く幸福な絆が生まれます。',
-    '信頼の積み重ねが財運を育てます。堅実な姿勢と人を大切にする心が長期的な繁栄をもたらします。急いで大金を狙うより、コツコツと実力を蓄え、協力関係から大きな仕事を引き寄せる流れが吉。副業や複数の安定した収入源を持つことで、40代に豊かさが大きく花開きます。焦らず一歩ずつが最良の財運の法則です。',
-    '感情の波が体調に直結しやすい傾向があります。心が疲れたら最優先で休養を取るようにしてください。腸・消化器系を整えることが全身の健康向上につながります。食事を丁寧に味わい、信頼できる人との温かい対話で感情を発散させることが長寿の秘訣です。',
-    '誰に対しても温かく接し、自然と人が集まってくる調停役です。しかし優しさから自分の意見を押し込めてしまうことも少なくありません。自分の気持ちを正直に伝えるトレーニングを積むことで、人間関係がさらに豊かになります。あなたの存在そのものが場の空気を和ませ、周囲に安らぎを届けています。',
-    '共感力・調整力・サポート力が並外れています。カウンセラー、教師、看護師、ソーシャルワーカー、コーディネーターなど、人を支え導く職業に最高の適性があります。あなたの使命は「人々の心に平和と安らぎを届け、愛の連鎖を社会全体に広げること」です。',
+    'じっくりと信頼関係を育む愛のスタイルです。一目惚れより、長い時間をかけて深まる絆を何より大切にします。誠実さと安定感がパートナーを強く惹きつけます。生涯の伴侶となる縁は意外と身近に潜んでいます。25〜30歳のゆっくりした出会いが、永続する幸福をもたらすでしょう。',
+    '堅実な努力と継続力で着実に財を築きます。不動産、農業、製造業、金融など「形のある実体的なもの」への投資に強い適性があります。焦らず積み重ねることで、老後も安心できる盤石の資産が形成されます。長期積み立て投資が最も高い効果をもたらします。',
+    '基礎体力が高く粘り強い体質に恵まれています。ただし運動不足になりがちな点に注意。関節・骨格のコンディションを定期的にチェックし、適度なストレッチと栄養バランスの取れた食事で健康を維持しましょう。規則正しい生活リズムがあなたを長寿へと導きます。',
+    '信頼できる少数の深い関係を大切にします。広い交友関係より、深い友情と家族との絆が人生を豊かにします。職場では縁の下の力持ちとして長期的な信頼を獲得し、チームの揺るぎない土台として欠かせない存在となります。',
+    '継続力・実行力・誠実さが最大の才能です。農業・建設・製造・不動産・銀行・公務員など、社会の基盤を支える職業が天職。じっくり確実に成果を積み上げる姿勢が、最終的に最も大きな成功をもたらします。あなたの使命は「揺るぎない安定の基盤を世界に提供すること」です。',
   ],
   /* 2: 知恵の探求者 */
   [
-    '知的な刺激がある出会いに心が動きます。同じ価値観と好奇心を共有できる相手との深い対話から恋が生まれます。感情より頭で考えすぎてしまうこともありますが、ときに理屈を手放して心の声に従うことが最高の縁を引き寄せます。晩婚の傾向がありますが、出会えば関係は深く長続きします。知性的な相手があなたを最も輝かせます。',
-    '専門的な知識とスキルが財運の源泉です。コンサルタント、研究者、著述家、プログラマー、分析家など「知識を売る」職種で高収入が期待できます。30代後半から収入が安定し始め、情報の精度と判断力が財運を大きく左右します。長期投資・分散投資が吉で、感情ではなくデータで判断することが富への近道です。',
-    '思考過多による頭疲れ・不眠に注意が必要です。頭を使いすぎたと感じたらすぐに自然の中へ。瞑想・ヨガ・ウォーキングで精神と身体のバランスを取ることが健康の要。目・神経系・脳のコンディション管理を怠らず、知識のインプット量と休息のバランスを意識してください。',
-    '論理的な視点で物事を捉えるため、感情的な場面では少し距離を置いてしまいがちです。しかし、意識的に感情を共有することで深い人間関係が育まれます。知的な仲間との議論や学びの共有が、あなたの人生を最も豊かにする人間関係の形です。ビジネスパートナーとの知的協働が大きな成果を生みます。',
-    '分析力・論理的思考・探究心が頂点レベルの才能です。学術研究、テクノロジー、哲学、戦略コンサルタント、発明家、作家などで頭角を現します。あなたの使命は「真理を飽くなき情熱で探求し、その叡智を世界に広く伝えること」。生涯学習があなたの魂に最高の輝きを与え続けます。',
+    '知的な刺激がある出会いに心が動きます。同じ価値観と好奇心を共有できる相手との深い対話から恋が生まれます。感情より頭で考えすぎてしまうこともありますが、ときに理屈を手放して心の声に従うことが最高の縁を引き寄せます。知性的な相手があなたを最も輝かせます。',
+    '専門的な知識とスキルが財運の源泉です。コンサルタント、研究者、著述家、プログラマー、分析家など「知識を売る」職種で高収入が期待できます。30代後半から収入が安定し始め、情報の精度と判断力が財運を大きく左右します。',
+    '思考過多による頭疲れ・不眠に注意が必要です。頭を使いすぎたと感じたらすぐに自然の中へ。瞑想・ヨガ・ウォーキングで精神と身体のバランスを取ることが健康の要。目・神経系・脳のコンディション管理を怠らないでください。',
+    '論理的な視点で物事を捉えるため、感情的な場面では少し距離を置いてしまいがちです。しかし、意識的に感情を共有することで深い人間関係が育まれます。知的な仲間との議論や学びの共有が、あなたの人生を最も豊かにします。',
+    '分析力・論理的思考・探究心が頂点レベルの才能です。学術研究、テクノロジー、哲学、戦略コンサルタント、発明家、作家などで頭角を現します。あなたの使命は「真理を飽くなき情熱で探求し、その叡智を世界に広く伝えること」です。',
   ],
-  /* 3: 変革の触媒 */
+  /* 3: 感性の育成者 */
   [
-    '深く激しい恋愛を経験する運命の持ち主です。恋愛を通じて自分自身が劇的に変容し成長します。困難な恋ほど情熱的に向き合いますが、相手に求めすぎると双方が疲弊してしまうことも。心の底からの覚悟が伴う真剣な出会いが、35歳前後に訪れます。傷と喜びの両方を経験した先に、本物の深い愛がたどり着きます。',
-    '大きな変化のタイミングに財運の波が押し寄せます。リスクを恐れず挑戦し、失敗しても必ず再生する強靭さがあなたの武器です。計画的な資金管理と大胆な行動力のバランスを保つことで、激しい波乱を越えて長期的な富が積み上がります。40代に財運の大逆転が訪れるでしょう。人生の転換点こそがチャンスです。',
-    'ストレス耐性は高く一見タフに見えますが、内側は繊細で傷つきやすい面があります。一度崩れると立て直しに時間がかかることも。デトックスを意識した食生活と肝臓・腎臓のケアが長寿の鍵。定期的な休息と精神の浄化でエネルギーを再充電することが、持続可能な健康の基盤となります。',
-    '周囲に変化と刺激をもたらす触媒のような存在です。時に対立を生むこともありますが、それが相手の気づきと成長を促す尊い役割を果たします。正直な言葉と誠実な態度が長続きする信頼関係の礎。職場では変革の推進力として重宝され、不可欠な人材として認められるでしょう。',
-    '変革力・問題解決力・再生の才能が際立ちます。企業変革コンサルタント、外科医、弁護士、心理セラピスト、危機管理専門家など、困難な状況を打開する仕事で本領を発揮します。あなたの使命は「古い構造を解体し、より良き新しい世界を力強く作り出すこと」です。',
+    '温かみと包容力が自然ににじみ出るあなたは、相手を癒す生まれながらのギフトを持っています。恋愛は焦らず縁を育むタイプ。穏やかで誠実なパートナーとの出会いが、28歳前後に静かに訪れます。関係を大切に育てることで、一生続く幸福な絆が生まれます。',
+    '信頼の積み重ねが財運を育てます。堅実な姿勢と人を大切にする心が長期的な繁栄をもたらします。副業や複数の安定した収入源を持つことで、40代に豊かさが大きく花開きます。焦らず一歩ずつが最良の財運の法則です。',
+    '感情の波が体調に直結しやすい傾向があります。心が疲れたら最優先で休養を取るようにしてください。腸・消化器系を整えることが全身の健康向上につながります。食事を丁寧に味わい、信頼できる人との温かい対話が長寿の秘訣です。',
+    '誰に対しても温かく接し、自然と人が集まってくる調停役です。しかし優しさから自分の意見を押し込めてしまうことも少なくありません。自分の気持ちを正直に伝えるトレーニングを積むことで、人間関係がさらに豊かになります。',
+    '共感力・調整力・サポート力が並外れています。カウンセラー、教師、看護師、ソーシャルワーカー、コーディネーターなど、人を支え導く職業に最高の適性があります。あなたの使命は「人々の心に平和と安らぎを届けること」です。',
   ],
-  /* 4: 大地の礎 */
+  /* 4: 輝く情熱家 */
   [
-    'じっくりと信頼関係を育む愛のスタイルです。一目惚れより、長い時間をかけて深まる絆を何より大切にします。誠実さと安定感がパートナーを強く惹きつけます。生涯の伴侶となる縁は意外と身近に潜んでいます。25〜30歳のゆっくりした出会いが、永続する幸福をもたらすでしょう。真摯な愛情に報いる相手との関係が長く続きます。',
-    '堅実な努力と継続力で着実に財を築きます。不動産、農業、製造業、金融など「形のある実体的なもの」への投資に強い適性があります。焦らず積み重ねることで、老後も安心できる盤石の資産が形成されます。長期積み立て投資が最も高い効果をもたらします。あなたの強みは「コツコツを決して諦めない意志の力」です。',
-    '基礎体力が高く粘り強い体質に恵まれています。ただし運動不足になりがちな点に注意。関節・骨格のコンディションを定期的にチェックし、適度なストレッチと栄養バランスの取れた食事で健康を維持しましょう。規則正しい生活リズムとしっかりした睡眠習慣があなたを長寿へと導きます。',
-    '信頼できる少数の深い関係を大切にします。広い交友関係より、深い友情と家族との絆が人生を豊かにします。職場では縁の下の力持ちとして長期的な信頼を獲得し、チームの揺るぎない土台として欠かせない存在となります。あなたの誠実な存在が周囲に深い安心感を与えています。',
-    '継続力・実行力・誠実さが最大の才能です。農業・建設・製造・不動産・銀行・公務員など、社会の基盤を支える職業が天職。じっくり確実に成果を積み上げる姿勢が、最終的に最も大きな成功をもたらします。あなたの使命は「揺るぎない安定の基盤を世界に提供し、人々の拠り所となること」です。',
+    'カリスマ性と情熱が自然と人を惹きつけます。高い理想を持ちながらも、相手を尊重するバランスが愛を長続きさせます。強さと優しさを兼ね備えた対等なパートナーと最高の関係を築けます。30代に運命の出会いが訪れ、人生が大きく輝き始めます。',
+    '強い上昇志向と揺るぎない実行力で大きな富を引き寄せます。管理職・経営者・投資家として本領発揮。40代に財運の大きな転換期が訪れ、社会的地位と収入が飛躍的に向上します。大局を見据えた決断力が繁栄の基盤を築きます。',
+    '旺盛なエネルギーを正しい方向に向けることが健康の核心です。過労と高血圧への注意が必要。定期的な有酸素運動・瞑想・精神的なリラックスを日課として取り入れましょう。心臓・循環器系のコンディション管理が長寿につながります。',
+    '威厳と存在感で自然と一目置かれる生来のリーダーです。部下やメンバーから厚く慕われますが、時に厳しすぎると感じさせることも。感情的な温かさを意識的に示すことで人心掌握力がさらに高まります。',
+    'リーダーシップ・統率力・決断力・カリスマ性が頂点の才能です。経営者・政治家・トップアスリート・芸能界のスターなど、頂点に立つことを宿命とした存在です。あなたの使命は「卓越したビジョンで時代をリードすること」です。',
   ],
-  /* 5: 自由の旅人 */
+  /* 5: 調和の奉仕者 */
   [
-    '多彩な出会いを経験しながら理想のパートナーを見つける旅路です。束縛を嫌い、お互いの自由と個性を尊重し合える関係こそが最高の愛の形です。旅行先や異業種交流での出会いが縁を引き寄せることも多いでしょう。一人の時間と二人の時間のバランスを大切にすることで、刺激と安らぎを兼ね備えた豊かな愛の関係が長続きします。',
-    '多角的な収入源を持つことで財運が安定します。フリーランス・副業・海外案件・デジタルビジネス・移動型ワークに強い適性があります。変化への柔軟な対応力が新しい財運の扉を次々と開きます。旅行・移動・異文化との接触がビジネスチャンスを運んでくるでしょう。固定した枠に縛られないことが豊かさへの近道です。',
-    '活動的でエネルギッシュな毎日を好みます。食生活の不規則さに注意し、旅行先での体調管理を怠らないように。野外活動・トレッキング・スポーツが心身のリフレッシュに最適です。感染症予防と免疫力の維持を日頃から意識することが、長期的な健康を保つ秘訣となります。',
-    '広いネットワークと多様な人脈が最大の強みです。初対面でもすぐに打ち解ける天性の社交性があります。ただし深い関係を築くには継続的な関わりが必要。「広く浅く」だけでなく、本当に大切にすべき人を見定める眼力を養いましょう。多様な価値観を持つ仲間との繋がりが、あなたの世界を大きく広げます。',
-    '語学力・国際感覚・適応力・コミュニケーション能力が輝く才能です。外交官、通訳者、旅行業、貿易商、フリーランサー、海外営業など、変化と移動が伴う職業で最大限に輝きます。あなたの使命は「異なる文化と人々をつなぎ、世界に新たな可能性の地平を開くこと」です。',
+    '献身的な愛情で相手を深く包み込む純粋な愛の持ち主です。相手の幸せを自分の喜びと感じる深い共感力があります。自己犠牲になりすぎず、自分の気持ちも大切にすることで本物の愛が長続きします。あなたの真摯な愛情に応えるパートナーが訪れます。',
+    '人を幸せにするサービスや仕事から収入が育ちます。福祉・医療・教育・美容・料理など「人のためになる」分野で財運が花開きます。社会貢献と収益のバランスを意識することで、精神的にも経済的にも豊かな人生が実現します。',
+    '他者を気遣うあまり自分の体調管理を後回しにしがちです。「自分を大切にすることが他者への最大の贈り物」と心に刻んでください。十分な睡眠・定期健診・自分だけへのご褒美時間が、長く周囲を幸せにし続ける秘訣です。',
+    '誰に対しても温かく接し、自然と人が集まる場の中心です。人の悩みを一人で抱え込みすぎないように注意してください。「聴く」だけでなく「適切に手放す」練習が、あなた自身を長く守ります。',
+    '共感力・奉仕精神・ケア能力が天与の才です。看護師・保育士・社会福祉士・料理人・カウンセラーなど、人を直接ケアする職業に最高の適性があります。あなたの使命は「愛の連鎖を生み出すこと」です。',
   ],
-  /* 6: 愛の奉仕者 */
+  /* 6: 均衡の調停者 */
   [
-    '献身的な愛情で相手を深く包み込む純粋な愛の持ち主です。相手の幸せを自分の喜びと感じる、深い共感力と愛情の持ち主。自己犠牲になりすぎず、自分の気持ちも同じように大切にすることで本物の愛が長続きします。あなたの真摯な愛情に誠実に応えるパートナーとの出会いが、28歳前後に訪れます。愛することと愛されることの両方があなたに必要です。',
-    '人を幸せにするサービスや仕事から収入が育ちます。福祉・医療・教育・ブライダル・美容・料理など「人のためになる」分野で財運が花開きます。社会貢献と収益のバランスを意識的に取ることで、経済的にも精神的にも豊かな人生が実現します。あなたの誠実さと温かさが最終的に最大の財産となるでしょう。',
-    '他者を気遣うあまり自分の体調管理を後回しにしがちです。「自分を大切にすることが他者への最大の贈り物」と心に深く刻んでください。十分な睡眠・定期健診・自分だけへのご褒美時間を確保することが、長く周囲を幸せにし続けるための最重要な秘訣です。',
-    '誰に対しても温かく接し、自然と人が集まる場の中心です。人間関係の潤滑油として周囲を和ませる存在ですが、人の悩みを一人で抱え込みすぎないように注意してください。「聴く」だけでなく「適切に手放す」練習が、あなた自身を長く守ります。自分も同じくらい大切にしてください。',
-    '共感力・奉仕精神・ケア能力が天与の才です。看護師・保育士・社会福祉士・料理人・カウンセラー・セラピスト・ウェディングプランナーなど、人を直接ケアする職業に最高の適性があります。あなたの使命は「愛の連鎖を生み出し、一人でも多くの人の心に光をともすこと」です。',
+    '美と調和を愛するあなたは、恋愛においても品格と洗練を重視します。外見だけでなく内面の美しさに惹かれ、互いを高め合える関係を求めます。結婚に向いた運命を持ち、良縁に恵まれやすいタイプです。パートナーとの美しい暮らしが幸福をもたらします。',
+    '美的センスと調和の才能が財を生みます。デザイン、ファッション、アート、インテリア、外交など「美と調和」に関わる分野で成功します。パートナーシップビジネスも吉。協力者との関係から大きな財運が開けます。',
+    '精神的なストレスが身体に現れやすい傾向があります。腎臓・腰のケアを意識し、美しい環境に身を置くことで健康が維持されます。芸術や音楽に触れる時間が心身のバランスを整えます。',
+    '公平さと調和を重んじ、争いを嫌う平和主義者です。誰とでも良好な関係を築ける才能がありますが、八方美人と見られることも。時には自分の意見をはっきり示すことで、より深い信頼関係が生まれます。',
+    '調停力・美的センス・外交手腕が際立つ才能です。弁護士、外交官、デザイナー、コーディネーター、ウェディングプランナーなどが天職。あなたの使命は「世界に美と調和をもたらすこと」です。',
   ],
-  /* 7: 深淵の賢者 */
+  /* 7: 深淵の変革者 */
   [
-    '表面的な付き合いより、魂と魂が触れ合う深い絆を強く求めます。なかなか心を開かないように見えますが、一度信頼すると永続する深い愛を育てます。真摯に向き合う覚悟のある相手との深い縁が、静かに、しかし確実に訪れます。孤独を恐れないあなたの強さと深みが、本物のパートナーを遠くからも惹きつけます。',
-    '深い洞察力と長期的視野で財を築きます。投資・研究・コンサルティング・心理分析・情報精査など、専門性を極めた分野で高収入が見込めます。情報の真贋を見抜く力と、タイミングを計る忍耐力があなたの財運を大きく左右します。40代以降に集大成の富が静かに実ります。焦りは禁物です。',
-    '感受性が高く、環境や人のエネルギーの影響を受けやすい体質です。定期的な孤独の時間と精神的なデトックスが心身の健康に不可欠。水・入浴・静寂な空間があなたを深く癒します。睡眠の質を最優先にした生活習慣を確立することが長寿の最大の秘訣です。',
-    '少数精鋭の深い人間関係を好みます。表面的な交流には疲弊してしまうこともあるため、自分に合った関わり方を無理なく選択することが大切。真の理解者との深い対話があなたの人生に最大の豊かさをもたらします。信頼できる人を少数でも確実に大切に守りましょう。',
-    '洞察力・探求心・深い直感力・比類ない分析力が才能の核心です。心理学・哲学・医学・霊的研究・投資分析・作家など、真理を追究する職業に強い適性があります。あなたは時代の一歩先を常に見通している存在。使命は「見えない真実を明らかにし、世界の深淵に純粋な光をあてること」です。',
+    '深く激しい恋愛を経験する運命の持ち主です。恋愛を通じて自分自身が劇的に変容し成長します。困難な恋ほど情熱的に向き合いますが、相手に求めすぎると双方が疲弊してしまうことも。35歳前後に本物の深い愛がたどり着きます。',
+    '大きな変化のタイミングに財運の波が押し寄せます。リスクを恐れず挑戦し、失敗しても必ず再生する強靭さがあなたの武器です。40代に財運の大逆転が訪れるでしょう。人生の転換点こそがチャンスです。',
+    'ストレス耐性は高く一見タフに見えますが、内側は繊細で傷つきやすい面があります。デトックスを意識した食生活と肝臓・腎臓のケアが長寿の鍵。定期的な休息と精神の浄化でエネルギーを再充電してください。',
+    '周囲に変化と刺激をもたらす触媒のような存在です。時に対立を生むこともありますが、それが相手の気づきと成長を促します。正直な言葉と誠実な態度が長続きする信頼関係の礎となります。',
+    '変革力・問題解決力・再生の才能が際立ちます。企業変革コンサルタント、外科医、弁護士、心理セラピスト、危機管理専門家などで本領を発揮します。あなたの使命は「古い構造を解体し、新しい世界を作り出すこと」です。',
   ],
-  /* 8: 輝く王者 */
+  /* 8: 自由の旅人 */
   [
-    'カリスマ性と情熱が自然と人を惹きつけます。高い理想を持ちながらも、相手を尊重するバランスが愛を長続きさせます。強さと優しさを兼ね備えた対等なパートナーと最高の関係を築けます。恋愛においても自然と主導権を握り、相手を守り導く力があります。30代に運命の出会いが訪れ、人生が大きく輝き始めます。',
-    '強い上昇志向と揺るぎない実行力で大きな富を引き寄せます。管理職・経営者・投資家として本領発揮。40代に財運の大きな転換期が訪れ、社会的地位と収入が飛躍的に向上します。大局を見据えた決断力と威信ある行動が、長期的な繁栄の盤石な基盤を築きます。',
-    '旺盛なエネルギーを正しい方向に向けることが健康の核心です。過労と高血圧への注意が必要。定期的な有酸素運動・瞑想・精神的なリラックスを日課として取り入れましょう。心臓・循環器系のコンディション管理を怠らず、仕事と休息のバランスを意識的に保つことが長寿につながります。',
-    '威厳と存在感で自然と一目置かれる生来のリーダーです。部下やメンバーから厚く慕われますが、時に厳しすぎると感じさせることも。感情的な温かさを意識的に示すことで人心掌握力がさらに高まります。あなたのリーダーシップが組織を最高の高みへと力強く導きます。',
-    'リーダーシップ・統率力・決断力・カリスマ性が頂点の才能です。経営者・政治家・軍人・トップアスリート・芸能界のスターなど、頂点に立つことを宿命とした存在です。あなたの使命は「卓越したビジョンと圧倒的な強さで時代をリードし、多くの人の可能性を引き出すこと」です。',
+    '多彩な出会いを経験しながら理想のパートナーを見つける旅路です。束縛を嫌い、お互いの自由と個性を尊重し合える関係が最高の愛の形です。旅行先や異業種交流での出会いが縁を引き寄せます。一人の時間と二人の時間のバランスが幸福の鍵です。',
+    '多角的な収入源を持つことで財運が安定します。フリーランス・副業・海外案件・デジタルビジネス・移動型ワークに強い適性があります。変化への柔軟な対応力が新しい財運の扉を開きます。固定した枠に縛られないことが豊かさへの近道です。',
+    '活動的でエネルギッシュな毎日を好みます。食生活の不規則さに注意し、旅行先での体調管理を怠らないように。野外活動・トレッキング・スポーツが心身のリフレッシュに最適です。',
+    '広いネットワークと多様な人脈が最大の強みです。初対面でもすぐに打ち解ける天性の社交性があります。ただし深い関係を築くには継続的な関わりが必要。本当に大切にすべき人を見定めましょう。',
+    '語学力・国際感覚・適応力・コミュニケーション能力が輝く才能です。外交官、通訳者、旅行業、貿易商、フリーランサー、海外営業などで最大限に輝きます。あなたの使命は「異なる文化と人々をつなぐこと」です。',
+  ],
+  /* 9: 達成の建設者 */
+  [
+    '恋愛においても真剣で責任感が強いあなた。遊びの恋愛には興味がなく、将来を見据えた誠実な関係を求めます。晩婚傾向がありますが、その分成熟した深い愛を育てられます。社会的地位のあるパートナーとの縁に恵まれるでしょう。',
+    '野心と忍耐力で着実にキャリアと財を築きます。40代以降に大きな成功と財運が訪れる晩成型。社会的地位の向上とともに収入も上昇します。長期的な視点での投資と計画的な資産形成が吉です。',
+    '骨格・関節・歯のコンディションに注意が必要です。ストレスを溜め込みやすい傾向があるため、定期的なリラックスタイムを確保してください。適度な運動と十分なカルシウム摂取が健康の基盤です。',
+    '権威ある人物や年長者との関係から多くを学びます。信頼を勝ち取るまで時間がかかりますが、一度築いた関係は非常に強固です。部下や後輩からの尊敬を集めるリーダーとなります。',
+    '組織運営力・計画性・忍耐力・責任感が最大の才能です。経営者、政治家、管理職、建築家、プロジェクトマネージャーなどが天職。あなたの使命は「社会に永続する価値を創造すること」です。',
+  ],
+  /* 10: 革新の博愛者 */
+  [
+    '友情から始まる恋愛が多いタイプです。精神的なつながりと自由を重視し、束縛のない関係を好みます。独自の価値観を理解してくれる相手との出会いが幸福をもたらします。グループ活動や社会活動を通じて良縁に巡り合えます。',
+    '革新的なアイデアと先見性が財を生みます。テクノロジー、IT、科学、人道的活動など未来志向の分野で成功します。独自のビジネスモデルや新しい市場の開拓で大きな富を築けます。',
+    '神経系のケアが健康の要です。ストレスや過度な刺激に敏感なため、定期的なデジタルデトックスと自然の中での時間が必要です。足首・ふくらはぎの循環を意識した運動が効果的です。',
+    '同じ志を持つ仲間との絆を大切にします。グループやコミュニティの中で輝くタイプです。個人よりチームでの活動で本領を発揮しますが、あまりに独自の視点から孤立しないよう注意が必要です。',
+    '革新性・独創性・人道精神・未来志向が際立つ才能です。発明家、科学者、IT起業家、社会活動家、NPO運営者などが天職。あなたの使命は「人類の進歩と幸福に貢献すること」です。',
+  ],
+  /* 11: 直感の夢想家 */
+  [
+    '表面的な付き合いより、魂と魂が触れ合う深い絆を求めます。なかなか心を開かないように見えますが、一度信頼すると永続する深い愛を育てます。芸術や音楽を通じた出会いに縁があります。夢見がちな面を理解してくれる相手が最良のパートナーです。',
+    '直感と創造性が財を生みます。アート、音楽、映像、ヒーリング、スピリチュアルな分野で才能を発揮します。現実的な金銭管理が苦手な面があるため、信頼できるアドバイザーを持つことが吉です。',
+    '感受性が高く、環境や人のエネルギーの影響を受けやすい体質です。定期的な孤独の時間と精神的なデトックスが必要。水・入浴・静寂な空間があなたを深く癒します。睡眠の質を最優先にしてください。',
+    '少数精鋭の深い人間関係を好みます。表面的な交流には疲弊してしまうため、自分に合った関わり方を選択することが大切。真の理解者との深い対話があなたの人生に最大の豊かさをもたらします。',
+    '直感力・芸術性・精神性・共感能力が天与の才です。芸術家、音楽家、詩人、ヒーラー、占い師、心理カウンセラーなどが天職。あなたの使命は「見えない世界の美と真実を形にすること」です。',
   ],
 ];
+
+function computeFortune(ti,y,m,d,gender){
+  const calc=CALCS[ti](y,m,d);
+  const ai=calc.idx % 12;
+  const arch=ARCHETYPES[ai];
+  const type=TYPES[ti];
+
+  const cats=CATS.map((cat,ci)=>({
+    ...cat,
+    text:CONTENT[ai][ci],
+    stars:calcDynamicStars(ai, ci, y, m, d),
+    kw:KEYWORDS[ai][ci],
+    biorhythm:calcBiorhythm({y,m,d}, ci),
+  }));
+
+  const dailyFortune = getDailyFortune(ai);
+
+  return{typeName:type.name,typeEmoji:type.emoji,label:calc.label,arch,cats,gender,y,m,d,dailyFortune,archIdx:ai};
+}
 
 /* ===========================
    RENDER RESULTS
    =========================== */
 function renderResults(r){
-  // 印刷フッター用に日付セット
   const today=new Date();
   document.getElementById('s-res').dataset.printdate=
     `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
@@ -1261,6 +1322,7 @@ function renderResults(r){
   document.getElementById('r-info').textContent=r.label;
   document.getElementById('r-arch').innerHTML=
     `<span>${r.arch.sym} ${r.arch.name}</span>　｜　${r.arch.elem}　｜　${r.arch.kw}`;
+  document.getElementById('daily-text').textContent=r.dailyFortune;
 
   const wrap=document.getElementById('cards-wrap');wrap.innerHTML='';
 
@@ -1273,6 +1335,14 @@ function renderResults(r){
     let stars='';
     for(let s=1;s<=5;s++)stars+=`<span class="c-star${s>cat.stars?' off':''}">${s<=cat.stars?'★':'☆'}</span>`;
 
+    const starLabel = ['低め','やや低め','普通','好調','絶好調'][cat.stars-1] || '';
+
+    // Biorhythm values
+    const bio = cat.biorhythm;
+    const bioShort = Math.round(bio.short);
+    const bioMid = Math.round(bio.mid);
+    const bioLong = Math.round(bio.long);
+
     card.innerHTML=`
       <div class="ch">
         <div class="ch-icon" style="--cg:${cat.cg}">${cat.icon}</div>
@@ -1281,12 +1351,113 @@ function renderResults(r){
           <div class="ch-sub">${cat.sub}</div>
         </div>
       </div>
-      <div class="c-stars">${stars}</div>
+      <div class="c-stars">${stars}<span class="star-label">${starLabel}</span></div>
       <div class="c-text">${cat.text}</div>
       <div class="c-kw">✦ ${cat.kw}</div>
+
+      <div class="biorhythm-section">
+        <div class="bio-title">✦ バイオリズム</div>
+        <div class="bio-chart">
+          <canvas id="bio-canvas-${i}" width="400" height="80"></canvas>
+        </div>
+        <div class="bio-legend">
+          <div class="bio-legend-item">
+            <span class="bio-legend-dot" style="background:${cat.bioColor[0]}"></span>
+            短期(${bio.cycles.short}日)
+          </div>
+          <div class="bio-legend-item">
+            <span class="bio-legend-dot" style="background:${cat.bioColor[1]}"></span>
+            中期(${bio.cycles.mid}日)
+          </div>
+          <div class="bio-legend-item">
+            <span class="bio-legend-dot" style="background:${cat.bioColor[2]}"></span>
+            長期(${bio.cycles.long}日)
+          </div>
+        </div>
+        <div class="bio-values">
+          <div class="bio-value">
+            <div class="bio-value-label">短期</div>
+            <div class="bio-value-num" style="color:${cat.bioColor[0]}">${bioShort > 0 ? '+' : ''}${bioShort}%</div>
+          </div>
+          <div class="bio-value">
+            <div class="bio-value-label">中期</div>
+            <div class="bio-value-num" style="color:${cat.bioColor[1]}">${bioMid > 0 ? '+' : ''}${bioMid}%</div>
+          </div>
+          <div class="bio-value">
+            <div class="bio-value-label">長期</div>
+            <div class="bio-value-num" style="color:${cat.bioColor[2]}">${bioLong > 0 ? '+' : ''}${bioLong}%</div>
+          </div>
+        </div>
+      </div>
     `;
     wrap.appendChild(card);
+
+    // Draw biorhythm chart after element is in DOM
+    setTimeout(() => drawBioChart(i, r.y, r.m, r.d, cat.bioColor, bio.cycles), 100);
   });
+}
+
+/* ===========================
+   DRAW BIORHYTHM CHART
+   =========================== */
+function drawBioChart(catIdx, y, m, d, colors, cycles){
+  const canvas = document.getElementById(`bio-canvas-${catIdx}`);
+  if(!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  const birth = new Date(y, m-1, d);
+  const today = new Date();
+  const daysSinceBirth = Math.floor((today - birth) / 86400000);
+
+  // Clear canvas
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.fillRect(0, 0, w, h);
+
+  // Draw center line
+  ctx.strokeStyle = 'rgba(201,168,76,0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, h/2);
+  ctx.lineTo(w, h/2);
+  ctx.stroke();
+
+  // Draw today marker
+  const todayX = w * 0.5;
+  ctx.strokeStyle = 'rgba(201,168,76,0.4)';
+  ctx.setLineDash([3, 3]);
+  ctx.beginPath();
+  ctx.moveTo(todayX, 0);
+  ctx.lineTo(todayX, h);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Draw curves for each cycle
+  const cycleLengths = [cycles.short, cycles.mid, cycles.long];
+
+  cycleLengths.forEach((cycle, idx) => {
+    ctx.strokeStyle = colors[idx];
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+
+    for(let x = 0; x <= w; x++){
+      const daysOffset = (x - todayX) / w * 60; // Show 60 days range
+      const totalDays = daysSinceBirth + daysOffset;
+      const val = Math.sin((2 * Math.PI * totalDays) / cycle);
+      const yPos = h/2 - val * (h/2 - 5);
+
+      if(x === 0) ctx.moveTo(x, yPos);
+      else ctx.lineTo(x, yPos);
+    }
+    ctx.stroke();
+  });
+
+  // Draw "今日" label
+  ctx.fillStyle = 'rgba(201,168,76,0.8)';
+  ctx.font = '9px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('今日', todayX, 12);
 }
 
 /* ===========================
@@ -1308,7 +1479,7 @@ function resetApp(){
 function shareResult(){
   if(!lastResult)return;
   const r=lastResult;
-  const text=`🔮 ロイヤル響 オリジナル占い\n━━━━━━━━━━━━━━━━\n【${r.typeName}】鑑定結果\n${r.y}年${r.m}月${r.d}日生まれ\n✦ ${r.arch.name}\n${r.arch.kw}\n━━━━━━━━━━━━━━━━\n#ロイヤル響占い #オリジナル占い`;
+  const text=`🔮 ロイヤル響 オリジナル占い\n━━━━━━━━━━━━━━━━\n【${r.typeName}】鑑定結果\n${r.y}年${r.m}月${r.d}日生まれ\n✦ ${r.arch.name}\n${r.arch.kw}\n\n今日の運勢: ${r.dailyFortune}\n━━━━━━━━━━━━━━━━\n#ロイヤル響占い #オリジナル占い`;
   if(navigator.share){
     navigator.share({title:'ロイヤル響オリジナル占い',text}).catch(()=>{});
   }else{
@@ -1326,81 +1497,81 @@ function shareResult(){
 const GUIDE_DATA=[
   {
     id:'zodiac',emoji:'♈',name:'西洋占星術',country:'🌍 バビロニア → ギリシャ → 欧米',
-    history:'紀元前3000年頃の古代メソポタミア・バビロニアで、祭司たちが夜空の星を観察し神意を読み取る術として誕生。その後ギリシャ・ローマ時代に哲学・数学と融合して理論化され、現代西洋占星術の基盤が完成した。12星座・10天体・12ハウスという体系が確立し、ルネサンス期には医学や政治の意思決定にも使われた。中世ヨーロッパではキリスト教の弾圧を受けながらも民間に生き延び、20世紀に大衆化して今日世界で最も普及した占術となった。',
-    method:'生年月日と出生時刻・場所から出生チャート（ホロスコープ）を作成する。太陽星座（12星座のどれか）・月星座・上昇星座（アセンダント）を中心に、各惑星の配置・アスペクト（角度関係）・ハウス（人生の12領域）を総合的に解釈する。性格・才能・運勢の周期・人間関係の相性まで幅広く読み解くことができる。',
-    similar:['月占術（ルナロジー）','東洋占星術（紫微斗数）','ヴェーダ占星術（ジョーティッシュ）','ドルイドの木占い']
+    history:'紀元前3000年頃の古代メソポタミア・バビロニアで、祭司たちが夜空の星を観察し神意を読み取る術として誕生。その後ギリシャ・ローマ時代に哲学・数学と融合して理論化され、現代西洋占星術の基盤が完成した。',
+    method:'生年月日と出生時刻・場所から出生チャート（ホロスコープ）を作成する。太陽星座・月星座・上昇星座を中心に、各惑星の配置・アスペクトを総合的に解釈する。',
+    similar:['月占術','東洋占星術','ヴェーダ占星術','ドルイドの木占い']
   },
   {
     id:'num',emoji:'🔢',name:'数秘術',country:'🌍 ユダヤ（カバラ）→ 古代ギリシャ → 欧米',
-    history:'古代ユダヤのカバラ思想に由来し、ヘブライ文字と数の神秘的な関係「ゲマトリア」が起源のひとつ。同時期、古代ギリシャの数学者ピタゴラスが「数は万物の根源」と唱え、1〜9の数に宇宙的な意味を見出した「ピタゴリアン数秘術」が独立して発展。中世に両者が融合し、近代では20世紀初頭の神智学者ロサンヌ・ドーティらによって現代数秘術として体系化された。シンプルな計算で誰でも実践できる手軽さが世界的な普及を促した。',
-    method:'生年月日の各数字をすべて足し、1桁になるまで繰り返す（例：1990年5月12日 → 1+9+9+0+5+1+2=27 → 2+7=9）。この「ライフパスナンバー」1〜9（特別数11・22・33を加える流派もある）に基づいて、魂の本質・使命・才能・人生テーマを読み解く。名前のアルファベットを数値化する「ソウルナンバー」「ネームナンバー」との組み合わせで精度が上がる。',
-    similar:['カバラ数秘術（ヘブライ）','ピタゴリアン数秘術','算命学（東洋版数理命術）','九星気学']
+    history:'古代ユダヤのカバラ思想に由来し、ヘブライ文字と数の神秘的な関係「ゲマトリア」が起源。古代ギリシャの数学者ピタゴラスが「数は万物の根源」と唱えた。',
+    method:'生年月日の各数字をすべて足し、1桁になるまで繰り返す。このライフパスナンバーに基づいて、魂の本質・使命・才能・人生テーマを読み解く。',
+    similar:['カバラ数秘術','ピタゴリアン数秘術','算命学','九星気学']
   },
   {
-    id:'celtic',emoji:'🌳',name:'ケルト樹木占い',country:'🌿 アイルランド・スコットランド（ケルト文化圏）',
-    history:'紀元前500〜200年頃のケルト民族に仕えた祭司「ドルイド」が、特定の樹木を聖なる存在として崇めた自然信仰に起源を持つ。古代アイルランドの「コラム占い」で使われた木の文字「オガム文字」が誕生木（Birth Tree）の概念と結びついた。各樹木には精霊が宿ると信じられ、13の月周期（太陰暦）に合わせて13の聖木が割り当てられた。20世紀にロバート・グレーヴスの著書「白い女神」でこの体系が再発見・普及し、現代ケルト占いとして世界へ広まった。',
-    method:'生年月日を13の月周期（各月約4週間）に対応する聖木に当てはめる。シラカバ・ナナカマド・トネリコ・ハンノキ・ヤナギなど13種の樹木それぞれに、独自の性質・才能・魂の特性が対応している。樹木の生態（常緑か落葉か・根の張り方・花の咲き方）が人格や運命の象徴として解釈される。',
-    similar:['西洋占星術（誕生日分類系）','ルーン占い（北欧ゲルマン）','ネイティブアメリカンのアニマル占い','花占い（フラワーホロスコープ）']
+    id:'celtic',emoji:'🌳',name:'ケルト樹木占い',country:'🌿 アイルランド・スコットランド',
+    history:'紀元前500〜200年頃のケルト民族に仕えた祭司「ドルイド」が、特定の樹木を聖なる存在として崇めた自然信仰に起源を持つ。',
+    method:'生年月日を13の月周期に対応する聖木に当てはめる。各樹木の独自の性質・才能・魂の特性から運命を読み解く。',
+    similar:['西洋占星術','ルーン占い','アニマル占い','花占い']
   },
   {
     id:'shichu',emoji:'☯',name:'四柱推命',country:'🈳 中国（唐〜宋代）',
-    history:'中国の陰陽五行思想を基盤に、唐代（7〜10世紀）の李虚中が誕生年・月・日の三柱で命を占う術を確立。宋代の徐子平が時刻（時柱）を加えた「四柱」体系に完成させ「子平術」とも呼ばれる。甲乙丙丁…の10干と子丑寅卯…の12支を組み合わせた60種の干支が4つ重なる「四柱」から、人の性格・才能・運勢の波を読む。日本には江戸時代に伝来し、明治以降に独自の解釈が加わって日本式四柱推命として発展した。',
-    method:'生年月日時を「年柱・月柱・日柱・時柱」の四つの干支（各2文字×4柱＝8文字）に変換し「四柱八字」を作成する。日柱の天干が「日主」となり、自分自身を表す。十神（比肩・劫財・食神・傷官・偏財・正財・偏官・正官・偏印・正印）の配置バランスから運命を読む。大運（10年周期）と年運（1年周期）で運の波を鑑定する。',
-    similar:['算命学（中国発・日本発展）','紫微斗数（命盤星術）','九星気学（年気学）','五行占い（基礎理論共有）']
+    history:'中国の陰陽五行思想を基盤に、唐代の李虚中が誕生年・月・日の三柱で命を占う術を確立。宋代の徐子平が時刻を加えた「四柱」体系に完成させた。',
+    method:'生年月日時を「年柱・月柱・日柱・時柱」の四つの干支に変換。十神の配置バランスから運命を読む。',
+    similar:['算命学','紫微斗数','九星気学','五行占い']
   },
   {
     id:'sanmei',emoji:'🎴',name:'算命学',country:'🈳 中国発祥 → 日本で独自発展',
-    history:'中国の陰陽五行・干支思想を源流とするが、現代算命学は20世紀に中国から渡来した高尾義政が日本で体系化・発展させた。四柱推命と共通の干支（十干十二支）を使うが、算命学はより「天中殺」「宿命・宿命の星」「位相法（干支の組み合わせ）」などの概念が特徴的。精神性・人生観・対人関係のパターンを重視する傾向があり、「人体星図（三才構造）」と呼ばれる独自の命盤図を用いる。日本では1970〜80年代に一世を風靡し、現在も多くの鑑定師に支持されている。',
-    method:'生年月日から干支（十干＋十二支）を算出し、「人体星図」という命盤を作成。縦に「天（精神）・人（感情）・地（行動）」の三段構造で性格と才能を読む。「天中殺」（人生で2年間、努力が実りにくい時期）の算出と活用が算命学の大きな特徴。陰占（表の命）と陽占（裏の命）の二面から人物像を立体的に分析する。',
-    similar:['四柱推命（干支体系共通）','九星気学（年干支活用）','紫微斗数（東洋命盤術）','五行占い（陰陽五行基盤）']
+    history:'中国の陰陽五行・干支思想を源流とするが、現代算命学は高尾義政が日本で体系化・発展させた。',
+    method:'生年月日から干支を算出し「人体星図」という命盤を作成。天中殺の算出と活用が算命学の大きな特徴。',
+    similar:['四柱推命','九星気学','紫微斗数','五行占い']
   },
   {
     id:'kyusei',emoji:'⭐',name:'九星気学',country:'🈳 中国（洛書）→ 日本で体系化',
-    history:'古代中国の伝説「禹王が洛水から現れた亀の甲羅に刻まれた図（洛書）を得た」という故事が起源。洛書の9つの数字が「九星（一白水星〜九紫火星）」の原型となった。奇門遁甲・太乙神数などの古代中国術数学と陰陽五行・干支が融合し、日本には平安時代に伝来。明治〜大正時代に園田真次郎が現代的な「気学」として体系化・大衆化した。方位（吉方位・凶方位）の活用が独自の発展点で、「引越し・旅行の吉方位を取る」という実践的な活用法が特徴的。',
-    method:'生まれた年（一部流派では月・日も使用）から一白〜九紫の「本命星」を算出する。計算式：（11-（西暦年の各桁の和を9で割った余り））%9。本命星に対応する方位（東西南北・四隅・中宮）を使って、吉方位旅行・引越し・活用で運を上げ、凶方位を避けることで運を守る。年・月・日・時の「九星盤」の重なりを見ることで、より精密な運勢分析が可能。',
-    similar:['四柱推命（干支年活用）','算命学（同基盤）','風水（方位活用共通）','五行占い（五行理論共通）']
+    history:'古代中国の伝説「洛書」が起源。明治〜大正時代に園田真次郎が現代的な「気学」として体系化した。',
+    method:'生まれた年から一白〜九紫の「本命星」を算出。吉方位・凶方位を活用して運を上げる。',
+    similar:['四柱推命','算命学','風水','五行占い']
   },
   {
-    id:'shibi',emoji:'🌌',name:'紫微斗数',country:'🈳 中国・宋代（10世紀頃）',
-    history:'宋代の道士・陳希夷（ちん・きい）が創始したとされる中国最高峰の命術。「紫微」は北極星（天帝の星）を意味し、北斗七星・南斗六星を中心とする144の星（星曜）を12宮の命盤に配置して運命を読む。四柱推命が「時間の流れ」で命を見るのに対し、紫微斗数は「空間的な星の配置図」として命盤を構築するイメージ。台湾・香港・中国で現代でも最も権威ある命術とされ、プロの鑑定師の世界では四柱推命を凌ぐ精度と評する鑑定師も多い。',
-    method:'生年月日時から「十二宮（命宮・財帛宮・官禄宮など）」を設定し、144星を各宮に配置した命盤を作成。「紫微星」「天機星」「太陽星」など主要星が命宮に入るかどうかで基本的な人生の型が決まる。各宮の星の組み合わせと「四化（化禄・化権・化科・化忌）」の流動を読むことで、性格・才能・財運・人間関係・大限（10年周期）を精密に鑑定する。',
-    similar:['四柱推命（中国命術）','西洋占星術（ハウス概念類似）','算命学（命盤術）','インド占星術（星配置系）']
+    id:'shibi',emoji:'🌌',name:'紫微斗数',country:'🈳 中国・宋代',
+    history:'宋代の道士・陳希夷が創始したとされる中国最高峰の命術。「紫微」は北極星を意味する。',
+    method:'生年月日時から十二宮を設定し、144星を各宮に配置した命盤を作成する。',
+    similar:['四柱推命','西洋占星術','算命学','インド占星術']
   },
   {
     id:'rokusei',emoji:'✡',name:'六星占術',country:'🇯🇵 日本（昭和期）',
-    history:'日本の占い師・細木数子が1970年代に独自に体系化した、日本生まれの現代占術。古代中国の陰陽五行・干支理論を基盤としながら、西洋占星術の12星座的な発想を取り入れて日本人向けに再構成した。六星（土星・金星・火星・天王星・木星・水星）と陰陽（各星に「陰」と「陽」）の組み合わせで12種類に人間を分類する体系が特徴。「大殺界」（3年間の運気低下期）という概念が特に有名で、1980〜90年代に日本で爆発的なブームを起こし、数千万部規模の書籍を販売した。',
-    method:'生年月日から六星（土星・金星・火星・天王星・木星・水星）のいずれかと陰陽（各星に陰・陽の2種）を算出して12タイプに分類。毎年発行される「年運」本で年・月の運気サイクル（12年周期）を確認し、「大殺界」「種まき期」「収穫期」などのフェーズを意識した行動指針を得る。西洋の十二星座との互換性も持ち、より直感的に理解できる設計になっている。',
-    similar:['西洋占星術（12分類・周期概念）','九星気学（運気サイクル）','四柱推命（干支基盤）','算命学（天中殺対比）']
+    history:'日本の占い師・細木数子が1970年代に独自に体系化した、日本生まれの現代占術。',
+    method:'生年月日から六星と陰陽を算出して12タイプに分類。「大殺界」という概念が特徴的。',
+    similar:['西洋占星術','九星気学','四柱推命','算命学']
   },
   {
-    id:'gogyo',emoji:'🌿',name:'五行占い',country:'🈳 中国（春秋・戦国時代 紀元前6〜3世紀）',
-    history:'古代中国で宇宙のすべての現象を「木・火・土・金・水」の5つの元素の相互作用で説明しようとした「五行思想」が起源。「相生（木→火→土→金→水→木…）」と「相克（木→土→水→火→金→木…）」という循環関係が万物の変化を支配すると考えられた。医学（漢方・鍼灸）・政治・軍事・建築（風水）・占術など中国文化のあらゆる分野に浸透した。四柱推命・算命学・九星気学・紫微斗数などほぼすべての東洋占術の理論的基盤となっており、「東洋占術の共通言語」とも言える。',
-    method:'生まれた年の干支から「五行（木・火・土・金・水）」のどれに属するかを算出。各五行には性格・才能・体質・色・方位・季節・臓器の対応関係があり、持って生まれた五行バランスを分析して運命を読む。「相生」関係にある五行が助けになり、「相克」関係にある五行が課題となる。年・月・日の五行の重なりで「今年は何の五行を補うべきか」という実践的な行動指針も導ける。',
-    similar:['四柱推命（五行計算の応用）','算命学（陰陽五行基盤）','九星気学（五行方位）','漢方医学（五行体質分類）']
+    id:'gogyo',emoji:'🌿',name:'五行占い',country:'🈳 中国（春秋・戦国時代）',
+    history:'古代中国で宇宙のすべての現象を「木・火・土・金・水」の5つの元素の相互作用で説明しようとした思想が起源。',
+    method:'生まれた年の干支から五行のどれに属するかを算出。相生・相克関係から運命を読む。',
+    similar:['四柱推命','算命学','九星気学','漢方医学']
   },
   {
     id:'takashima',emoji:'📅',name:'高島暦',country:'🇯🇵 日本（明治時代）',
-    history:'明治時代の実業家・易学者・高島嘉右衛門（1832〜1914）が中国の易経（えききょう）を日本の実情に合わせて体系化した占術。高島は幕末から明治にかけて数々の歴史的事件（日清・日露戦争の行方など）を易で的中させたとされ、「高島易断」として明治社会で絶大な影響力を持った。六十四卦（易の64種の組み合わせ）を干支暦（旧暦）と組み合わせ、その年・月・日・時の吉凶を判断する「高島暦」は現在も毎年刊行される最も歴史ある日本の運勢暦である。',
-    method:'六十四卦（64通りの卦象）を基本に、その年の干支・節気・月の満ち欠けを組み合わせて年間・月別・日別の運勢を読む。個人の誕生年干支と当年干支の「相生・相克」関係から吉凶を判定。現代では「大安・仏滅・先勝…」の六曜も高島暦体系の一部として記載されており、冠婚葬祭の日取り選びに広く使われている。易の卦を筮竹（ぜいちく）や硬貨を使って立てる体験型占いとしても実践される。',
-    similar:['算命学（干支基盤）','九星気学（暦活用）','四柱推命（年干支）','易占い（六十四卦）']
+    history:'明治時代の実業家・易学者・高島嘉右衛門が中国の易経を日本の実情に合わせて体系化した占術。',
+    method:'六十四卦を基本に、干支・節気・月の満ち欠けを組み合わせて運勢を読む。',
+    similar:['算命学','九星気学','四柱推命','易占い']
   },
   {
-    id:'vedic',emoji:'🕉',name:'インド占星術',country:'🇮🇳 インド（ヴェーダ時代・紀元前1500年以前）',
-    history:'「ジョーティッシュ（Jyotish）」とも呼ばれ、古代インドの聖典「ヴェーダ」の補助学問として約5000年の歴史を持つ世界最古級の占星術体系。西洋占星術と共通のルーツを持つが、西洋が「春分点固定の黄道帯（熱帯占星術）」を使うのに対し、インド占星術は「実際の星座位置（恒星黄道帯）」を使う点が根本的に異なる（約23〜24度のズレがある）。チャンドラ・ラグナ（月星座）・ナクシャトラ（27の月宿）・ダシャー（惑星期間）が主要概念。現代でもインド人の約8割が結婚・就職などで鑑定を受けると言われる。',
-    method:'出生チャート（ラグナチャート）を作成し、上昇星座（ラグナ）を第一ハウスとして各惑星の配置を9つのグラハ（太陽・月・火・水・木・金・土・ラーフ・ケートゥ）で読む。西洋占星術と最大の違いは「ナクシャトラ（27月宿）」の活用と、「ヴィムショッタリ・ダシャー（120年周期の惑星期間）」による精密な時期読み。カルマと前世の概念も組み込まれ、魂の成長という観点からも運命を読む。',
-    similar:['西洋占星術（共通ルーツ）','紫微斗数（星配置命盤）','マヤ暦（星と周期）','ケルト樹木占い（自然周期）']
+    id:'vedic',emoji:'🕉',name:'インド占星術',country:'🇮🇳 インド（ヴェーダ時代）',
+    history:'「ジョーティッシュ」とも呼ばれ、古代インドの聖典「ヴェーダ」の補助学問として約5000年の歴史を持つ。',
+    method:'出生チャートを作成し、9つのグラハと27のナクシャトラで運命を読む。',
+    similar:['西洋占星術','紫微斗数','マヤ暦','ケルト樹木占い']
   },
   {
-    id:'maya',emoji:'🌅',name:'マヤ暦',country:'🌎 メソアメリカ（マヤ文明・紀元前3000年頃〜）',
-    history:'メソアメリカのマヤ文明が使用した「ツォルキン暦（神聖暦）」は20の日紋（ナワル）×13の音（トーン）＝260日周期の暦。農業・祭礼・人の誕生日の意味を読むために使われた。マヤ人は時間を「螺旋状に繰り返す生きたエネルギー」と捉え、各日に固有の振動と意味があると信じた。1990年代以降、メキシコのマヤ暦研究者ホセ・アグエイアスの著作を通じて日本でも爆発的にブームとなり、「マヤ暦占い師」が多数誕生した。「2012年12月21日に時代が変わる」という予言でも世界的に注目を浴びた。',
-    method:'生年月日を「ツォルキン暦」の対応する「KIN番号（1〜260）」に変換。KIN番号は「20の日紋（アハウ・イミシュ・アカバル…）」と「13の音（1〜13のトーン）」の組み合わせで構成される。日紋が持つ性質（力・使命・テーマ）とトーンが表すエネルギーの強さから、魂の本質・才能・人生の使命を読み解く。260日周期のサイクルで毎日の「当日のエネルギー」を確認する実践法もある。',
-    similar:['西洋占星術（宇宙周期）','インド占星術（星と周期）','ネイティブアメリカンのメディスンカード','九星気学（周期概念）']
+    id:'maya',emoji:'🌅',name:'マヤ暦',country:'🌎 メソアメリカ（マヤ文明）',
+    history:'メソアメリカのマヤ文明が使用した「ツォルキン暦」は20の日紋×13の音＝260日周期の暦。',
+    method:'生年月日をKIN番号に変換。日紋と音の組み合わせから魂の本質・使命を読み解く。',
+    similar:['西洋占星術','インド占星術','メディスンカード','九星気学']
   },
   {
-    id:'rune',emoji:'ᚠ',name:'ルーン占い',country:'🌿 北欧・ゲルマン（紀元前1〜2世紀）',
-    history:'北欧・ゲルマン民族が使用した「ルーン文字（Runes）」は単なる文字体系を超え、神秘的な力を持つ聖なる刻み文字として信仰された。北欧神話の最高神オーディンが9日間世界樹ユグドラシルに逆さ吊りになって苦行の末にルーンの秘密を会得したという神話が有名。古代フサルク（24文字）が占い・魔術・呪符として使われ、ヴァイキング時代には航海の安全や戦の吉凶を占う重要な術として機能した。中世には魔女狩りとともに一度禁止されたが、19〜20世紀の神秘主義ルネサンスで復活し、現代では世界中で実践されている。',
-    method:'伝統的には24文字の「古フサルク」のルーン石やタイルをポーチに入れ、問いを立てながら引く。「1枚引き（現在の状況）」「3枚引き（過去・現在・未来）」「ノルンの展開（運命・現状・潜在力）」など展開法が多様。本占いでは「誕生ルーン（Birthday Rune）」として生まれた月日をルーン24文字に対応させ、生涯の守護ルーンとして個人の本質と使命を読み解く。各ルーンには家畜・旅・喜び・守護・太陽など原始的な象徴が込められている。',
-    similar:['ケルト樹木占い（北欧・ケルト文化圏）','タロットカード（象徴体系）','オガム占い（ケルト文字占い）','西洋占星術（ゲルマン発展）']
+    id:'rune',emoji:'ᚠ',name:'ルーン占い',country:'🌿 北欧・ゲルマン',
+    history:'北欧・ゲルマン民族が使用した「ルーン文字」は神秘的な力を持つ聖なる刻み文字として信仰された。',
+    method:'24文字の古フサルクのルーン石を引く。誕生ルーンとして生涯の守護ルーンを読み解く。',
+    similar:['ケルト樹木占い','タロットカード','オガム占い','西洋占星術']
   },
 ];
 
@@ -1454,7 +1625,6 @@ function closeGuide(e){
   if(e.target===document.getElementById('guide-modal-bg'))closeGuideModal();
 }
 
-// ESC key to close
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeGuideModal();});
 
 </script>
