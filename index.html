@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ロイヤル響 ✦ オリジナル占い</title>
+<title>願い暦 ✦ オリジナル占い</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Cinzel+Decorative:wght@400;700&family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -313,8 +313,8 @@ body{
 <div class="screen active" id="s-input">
   <div class="logo-wrap">
     <span class="logo-crown">♛</span>
-    <div class="logo-en">Royal Hibiki</div>
-    <div class="logo-ja">ロイヤル響 オリジナル占い</div>
+    <div class="logo-en">Negaibi Koyomi</div>
+    <div class="logo-ja">願い暦 オリジナル占い</div>
     <div class="g-divider"></div>
     <div class="logo-tagline">あなたの生年月日が、宇宙の真実を解き明かす</div>
   </div>
@@ -966,8 +966,8 @@ function resetApp(){
 function shareResult(){
   if(!lastResult)return;
   const r=lastResult;
-  const text=`🔮 ロイヤル響 オリジナル占い\n━━━━━━━━━━━━━━━━\n【${r.typeName}】鑑定結果\n${r.y}年${r.m}月${r.d}日生まれ\n✦ ${r.arch.name}\n${r.arch.kw}\n\n今日の運勢: ${r.dailyFortune}\n━━━━━━━━━━━━━━━━\n#ロイヤル響占い`;
-  if(navigator.share){navigator.share({title:'ロイヤル響オリジナル占い',text}).catch(()=>{});}
+  const text=`🔮 願い暦 オリジナル占い\n━━━━━━━━━━━━━━━━\n【${r.typeName}】鑑定結果\n${r.y}年${r.m}月${r.d}日生まれ\n✦ ${r.arch.name}\n${r.arch.kw}\n\n今日の運勢: ${r.dailyFortune}\n━━━━━━━━━━━━━━━━\n#願い暦占い`;
+  if(navigator.share){navigator.share({title:'願い暦オリジナル占い',text}).catch(()=>{});}
   else{navigator.clipboard.writeText(text).then(()=>{const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}).catch(()=>alert(text));}
 }
 
